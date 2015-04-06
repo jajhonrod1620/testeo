@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--
+  Created using jsbin.com
+  Source can be edited via http://jsbin.com/umevi/2/edit
+-->
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>JSbin Test</title>
+  
+</head>
+
+<body>
+<select id="ps-type" name="ps-type[]" multiple="multiple" size="5">
+    <option>Residential - Wall Insulation</option>
+    <option>Residential - Attic /Crawl Space Insulation</option>
+    <option>Residential - Foundation Insulation</option>
+    <option>Residential - Exterior Roof System</option>
+    <option>Commercial - Wall Insulation</option>
+    <option>Commercial - Air Barrier System (Walltite)</option>
+    <option>Commercial - Roof System</option>
+</select>
+
+  <button>Alert</button>
+<script>
+function valoresarreglo(){
+  alert( $("#ps-type").val() || []);
+  multipleselects = $("#ps-type").val() || [];
+  if(multipleselects == '')
+		alert("ENTRO");
+
+}
+$("button").click(valoresarreglo);
+</script>

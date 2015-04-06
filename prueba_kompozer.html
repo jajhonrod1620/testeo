@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>ventana_nueva</title>
+
+  
+</head><body>
+<title>SOFTWARE DE GESTION ADMINFO -- SOLUCIONES LATINAS Ltda.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+<script language="JavaScript">
+    function cerrar()
+    {
+      top.window.close();
+    }
+  </script>
+<style type="text/css">
+FONT {
+	FONT-FAMILY: Trebuchet MS, Arial, Helvetica, Verdana, sans-serif; FONT-SIZE: 8pt
+}
+TABLE {
+	FONT-FAMILY: Trebuchet MS, Arial, Helvetica, Verdana, sans-serif; FONT-SIZE: 8pt
+}
+SELECT {
+	BACKGROUND-COLOR: #ffffff; FONT-SIZE: xx-small; 
+}
+OPTION.titulo {
+	BACKGROUND-COLOR: #dedeff
+}
+OPTION.elemento {
+	BACKGROUND-COLOR: #eeeeff
+}
+A:hover {
+	COLOR: #000000
+}
+INPUT {
+	 color: #000000; font-family: Arial; background-color: #FFFFFF; font-size: 8 pt; height:20px;  border: 1 solid #959595; padding: 0; background-position: center 50% 
+}
+BODY {
+	scrollbar-face-color: #fcfcfc; scrollbar-shadow-color: #000000; scrollbar-highlight-color: #ffffff; scrollbar-dlight-color: #000000; scrollbar-darkshadow-color: #000000; scrollbar-track-color: #000000; scrollbar-arrow-color: #000000
+}
+.print {
+	display: none;
+}
+@media Print {
+	.noprint{
+		display: none;
+	}
+}
+</style>
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+
+  <tbody>
+    <tr>
+      <td bgcolor="#ffffff" height="41" width="100%"><img alt="imagen" src="" border="0"></td>
+    </tr>
+    <tr>
+      <td width="100%">
+      <table align="center" border="0" cellpadding="0" cellspacing="1" height="100%">
+        <tbody>
+          <tr>
+            <td align="center">
+            <table border="0" cellpadding="5" cellspacing="0" width="">
+              <tbody>
+                <tr>
+                  <td>
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                      <tr>
+                        <td align="right" valign="bottom" width="50"><map name="planetmap">
+<area shape="rect" coords="0,0,82,126" href="sun.htm" alt="Sun">
+<area shape="circle" coords="90,58,3" href="mercur.htm" alt="Mercury">
+<area shape="circle" coords="124,58,8" href="venus.htm" alt="Venus">
+</map><img alt="imagen" src="" class="noprint" usemap="#planetmap" border="0" height="28" width="50">
+                        </td>
+                        <td align="middle" background="" bgcolor="#525e6e" valign="center" width="100%">
+                        <p align="center"><font class="block-title" color="#666666"><b>Causales</b></font></p>
+                        </td>
+                        <td clsealign="left" valign="bottom" width="50"><img alt="imagen" src="" class="noprint" border="0" height="28" width="50"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                      <tr>
+                        <td bgcolor="#006699">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tbody>
+                            <tr>
+                              <td bgcolor="#525e6e">
+                              <table border="0" cellpadding="0" cellspacing="1" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td align="center" bgcolor="#eaedf4">
+                                    <table align="center" border="0" cellpadding="0" cellspacing="1">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                          <form action="" method="post" name="formulario" onsubmit="return validar()">
+                                            <table bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" border="0" bordercolor="#ffffff" cellpadding="0" cellspacing="0" width="100%">
+                                              <tbody>
+                                                <tr>
+                                                  <td>
+                                                  <table bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" border="0" bordercolor="#ffffff" cellpadding="1" cellspacing="0" width="100%">
+                                                    <tbody>
+                                                      <tr>
+                                                        <td width="100">Causal</td>
+                                                        <td width="160"><br>
+</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td width="100">Descripcion
+Causal 2<font color="#ff0000"><b>*</b></font></td>
+                                                        <td width="160"><input name="descripcion" id="descripcion" value="" tabindex="1" style="" type="text"></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td width="100">Maximo
+Dias<font color="#ff0000"><b>*</b></font></td>
+                                                        <td width="160"><input name="max_dias" id="max_dias" value="" tabindex="1" onkeyup="if(isNaN(this.value)||(this.value)==' '||( trim(this.value)!='' && (trim(this.value)!=this.value) )) {alert('Solo Acepto Numeros'); this.value='';}" style="" type="text"></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td width="100">Motivo
+No Pago Titularizadora<font color="#ff0000"><b>*</b></font></td>
+                                                        <td width="160">
+                                                        <select name="nopago_tit" id="nopago_tit" style="" tabindex="1">
+                                                        <option value=""></option>
+                                                        <option value="233">Afectado Ola Invernal</option>
+                                                        <option value="232">Cliente De Viaje O Residente En Otra Ciudad O Pais</option>
+                                                        <option value="230">Contact Tit Sin Mot</option>
+                                                        <option value="231">Cont Tercero Sin Mot</option>
+                                                        <option value="219">Desaparicion</option>
+                                                        <option value="215">Desempleo</option>
+                                                        <option value="217">Divorcio - Separacion</option>
+                                                        <option value="213">En Cobro Juridico</option>
+                                                        <option value="222">Iliquidez Trans</option>
+                                                        <option value="226">No Coincide Fecha De Vto</option>
+                                                        <option value="225">No Recibe El Extracto</option>
+                                                        <option value="224">Olvido Del Pago</option>
+                                                        <option value="228">Pago No Aplicado</option>
+                                                        <option value="216">Quiebra</option>
+                                                        <option value="223">Reclamacion De Seguros (fallecido, Incendio, Terremoto,
+Itp)</option>
+                                                        <option value="229">Reclamo En Tramite</option>
+                                                        <option value="221">Reducde Ingresos</option>
+                                                        <option value="218">Secuestro</option>
+                                                        <option value="214">Sin Voluntad</option>
+                                                        <option value="211">Tramite Dacion - Permuta</option>
+                                                        <option value="210">Tramite Reestructuracion - Acuerdo De Pago</option>
+                                                        <option value="212">Tramite Subrogacion</option>
+                                                        <option value="220">Venta Sin Subrogar</option>
+                                                        <option value="227">Ya Pago</option>
+                                                        </select>
+                                                        </td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td width="100">Estado<font color="#ff0000"><b>*</b></font></td>
+                                                        <td width="160">
+                                                        <select name="estado" id="estado" style="" tabindex="1">
+                                                        <option value="A">A</option>
+                                                        <option value="C">C</option>
+                                                        </select>
+                                                        </td>
+                                                      </tr>
+                                                      <tr>
+                                                        <input name="grabador" value="admon" type="hidden"></tr>
+                                                    </tbody>
+                                                  </table>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td align="right"><br>
+                                                  <input style="" value="Guardar" name="accion" tabindex="1" type="submit"> </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                            <input value="" name="sinueva" type="hidden"> <input value="" name="silista" type="hidden"> <input value="causales" name="nom_programa" type="hidden"> <input value="V" name="nuevo" type="hidden"> <input value="conscausal" name="llave" type="hidden"> <input value="" name="val_llave" type="hidden"> <input value="conscausal=$conscausal" name="condicion" type="hidden"></form>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <script languaje="javascript">
+<!--
+
+function trim (myString)
+{
+return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
+}
+
+ function validar() 
+	{ if (0==1  || (trim(document.formulario.descripcion.value).length==0) || (trim(document.formulario.max_dias.value).length==0) || (trim(document.formulario.nopago_tit.value).length==0) || (trim(document.formulario.estado.value).length==0)) 
+
+  { alert('Debe Diligenciar Los Siguientes Campos :\n-------------------------------------\n- Descripcion Causal 2\n- Maximo Dias\n- Motivo No Pago Titularizadora\n- Estado\n'); return false; }	else	return true;	}
+	-->
+  
+                                    </script>
+                                    <script language="JavaScript">
+            function busca_ajax(descripcion,campo,valor,tabla)
+          		{  document.getElementById('des_' + campo).value = "Buscando...";
+                 //alert(descripcion + campo + valor + tabla);
+                 agent.call('','php_busca','java_busca',descripcion,campo,valor,tabla);
+            	}
+            function java_busca(cadena) //si el usuario no existe entonces abre Informa
+          		{ if(cadena['numreg']==0)
+          				{	document.getElementById(cadena['campo']).value="";
+          				  document.getElementById('des_'+cadena['campo']).value="";
+          				  document.getElementById(cadena['campo']).focus();
+          				  alert('Registro No Existe');
+          				}
+          			else
+          				{ document.getElementById('des_'+cadena['campo']).value=cadena['descripcion'];
+          				  document.getElementById(cadena['campo']).value=cadena['valor'];
+          				}
+
+          		}
+          </script>
+                                    <script language="JavaScript"> 
+function descripciones(codcampo,descampo,valcod,valdes)
+	{ //alert(codcampo);alert(valcod);alert(descampo);alert(valdes);
+		document.getElementById(codcampo).value=valcod;
+    document.getElementById(descampo).value=valdes;
+	}
+                                    </script> </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                      <tr>
+                        <td align="right" valign="top" width="40"> <img alt="" src="/padminfo/imagenes/cuadro_bottom_left.gif" border="0" height="9" width="40"> </td>
+                        <td background="/padminfo/imagenes/cuadro_bottom_center.gif" width="100%">
+                        <img alt="" src="/padminfo/imagenes/spacer.gif" border="0" height="1" width="1"> </td>
+                        <td align="left" valign="top" width="40"> <img alt="" src="/padminfo/imagenes/cuadro_bottom_right.gif" border="0" height="9" width="40"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</body></html>

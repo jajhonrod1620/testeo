@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>each demo</title>
+  <style>
+  div {
+    color: red;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bolder;
+    width: 300px;
+  }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+</head>
+<body>
+ 
+<select id="opciones">
+  <option>Texto 1</option>
+  <option>Texto 2</option>
+  <option>Texto 3</option>
+  <option>Texto 4</option>
+</select>
+ 
+<script>
+$(document).ready(function() {
+  $( " #opciones option" ).each(function( index ) {
+    $(this).attr('value',"campo1");
+  });
+});
+</script>
+ 
+</body>
+</html>

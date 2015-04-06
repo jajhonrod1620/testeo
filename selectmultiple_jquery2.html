@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  p { color:red; margin:4px; }
+  b { color:blue; }
+  </style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+  <p></p>
+
+  <select id="single">
+    <option>Single</option>
+    <option>Single2</option>
+  </select>
+
+  <select id="multiple" multiple="multiple">
+    <option>Multiple</option>
+    <option>Multiple2</option>
+    <option>Multiple3</option>
+  </select>
+<button>Alert</button>
+<script>
+    function displayVals() {
+      var singleValues = $("#single").val();
+      var multipleValues = $("#multiple").val() || [];
+      $("p").html("<b>Single:</b> " + 
+                  singleValues +
+                  " <b>Multiple:</b> " + 
+                  multipleValues.join(", "));
+    }
+
+    $("select").change(displayVals);
+    displayVals();
+
+function vervalores() {
+	
+}
+
+$("button").click(displayVals);
+</script>
+
+</body>
+</html>

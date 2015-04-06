@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  #frm2{
+      width: 70%; margin: auto;
+  }
+  #frm2 ol{margin:0; padding:0; list-style:none;}
+  #frm2 label{
+      display: block;
+      width: 10em;
+      float: left;
+  }
+  #frm2 ul li{clear: both;}
+  #frm2 fieldset {
+      border:0;
+      margin:0;
+  }
+  #frm2 legend{display:none;}
+  #frm2 legend.lblVisible{
+      display:block;
+      width:4em;
+      margin: 0; padding: 0;
+  }
+  #frm2 label.lblMid{
+      clear: both;
+      display: block;
+      margin: 0 0 0 9em;
+  }
+</style>
+</head>
+<body>
+<form name="frm2" id="frm2" action="index.html" method="post">
+  <fieldset title="Datos personales" id="fldDatos">
+    <legend>Datos personales del alumno</legend>
+    <ol>
+      <li>
+        <label for="txtNombre2">Nombre</label>
+        <input type="text" name="txtNombre2" id="txtNombre2" size="15" title="Indique el nombre del alumno" />
+      </li>
+      <li>
+        <label for="txtApe2">Apellidos</label>
+        <input type="text" name="txtApe2" id="txtApe2" size="45" title="Indique los apellidos del alumno" />
+      </li>
+      <li>
+        <fieldset>
+          <legend class="lblVisible">Edad</legend>
+          <label for="radEdad2-1" class="lblMid">
+          <input type="radio" name="radEdad2" id="radEdad2-1" value="10-20" />10-20 años
+          </label>
+          <label for="radEdad2-2" class="lblMid">
+          <input type="radio" name="radEdad2" id="radEdad2-2" value="20-30" />20-30 años
+          </label>
+        </fieldset>
+      </li>
+      <li>
+        <label for="slcLoca2">Localidad</label>
+          <select name="slcLoca2" id="slcLoca2" title="Selecciona la localidad">
+            <option value="mi_casa">Mi casa</option>
+            <option value="tu_casa">Tu casa</option>
+            <option value="su_casa">Su casa</option>
+          </select>
+      </li>
+      <li>
+      <label for="tObser2">Observaciones:<br />
+      <textarea name="tObser2" id="tObser2" cols="60" rows="10"></textarea>
+      </label>
+      </li>
+    </ol>
+  </fieldset>
+</form>
+</body>
+</html>

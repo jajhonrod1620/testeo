@@ -1,0 +1,225 @@
+<html>
+  <head><title>SOFTWARE DE GESTION ADMINFO   --   SOLUCIONES LATINAS Ltda.</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script language="JavaScript">
+    function cerrar()
+    {
+      top.window.close();
+    }
+  </script>
+</head>
+<STYLE type=text/css>
+FONT {
+	FONT-FAMILY: Trebuchet MS, Arial, Helvetica, Verdana, sans-serif; FONT-SIZE: 8pt
+}
+TABLE {
+	FONT-FAMILY: Trebuchet MS, Arial, Helvetica, Verdana, sans-serif; FONT-SIZE: 8pt
+}
+SELECT {
+	BACKGROUND-COLOR: #ffffff; FONT-SIZE: xx-small; 
+}
+OPTION.titulo {
+	BACKGROUND-COLOR: #dedeff
+}
+OPTION.elemento {
+	BACKGROUND-COLOR: #eeeeff
+}
+A:hover {
+	COLOR: #000000
+}
+INPUT {
+	 color: #000000; font-family: Arial; background-color: #FFFFFF; font-size: 8 pt; height:20px;  border: 1 solid #959595; padding: 0; background-position: center 50% 
+}
+BODY {
+	scrollbar-face-color: #fcfcfc; scrollbar-shadow-color: #000000; scrollbar-highlight-color: #ffffff; scrollbar-dlight-color: #000000; scrollbar-darkshadow-color: #000000; scrollbar-track-color: #000000; scrollbar-arrow-color: #000000
+}
+.print {
+	display: none;
+}
+@media Print {
+	.noprint{
+		display: none;
+	}
+}
+</STYLE>
+<body topmargin="0" leftmargin="0" bgcolor="#FFF7E7" link="#000000" oncontextmenu='return false'>
+<table border="0" width="100%" cellspacing="0" cellpadding="0" height="100%">
+<tr><td width='100%' height='41' bgcolor='#ffffff'><IMG alt='imagen' border=0 src=''></td></tr>  
+
+<tr>
+  <td width=100%>
+    <table border="0" align=center cellspacing="1" cellpadding="0" height="100%">
+      <tr>
+        <td align="center">
+          <TABLE border=0 cellPadding=5 cellSpacing=0 width="">
+          <TR>
+            <TD>
+              <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+                <TR> 
+                   <TD align=right vAlign=bottom width=50><IMG alt="imagen" border=0 height=28 src="" width=50 class='noprint'></TD>                   <TD align=middle background="" vAlign=center width="100%" bgcolor="#525E6E"><p align="center"><font class="block-title" color="#666666"><b>Causales</b></font></p></TD>
+                   <TD clsealign=left vAlign=bottom width=50><IMG alt="imagen" border=0 height=28 src="" width=50 class='noprint'></TD>                 </TR>
+              </TABLE>
+              
+              <TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+                <TR>
+                  <TD bgColor="#006699">
+                    <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+                      <TR>
+                        <TD bgColor="#525e6e">
+                          <TABLE border=0 cellPadding=0 cellSpacing=1 width="100%">
+                                                     <TR>
+                            <TD bgColor="#eaedf4" align="center">
+                              <table border="0" align=center cellspacing="1" cellpadding="0">                                <tr>
+                                  <td>
+<form action="" method="post" name="formulario"
+	onsubmit='return validar()'>
+<table border="0" cellspacing="0" cellpadding="0" bordercolor="#FFFFFF"
+	bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" width="100%">
+	<tr>
+		<td><table border=0 cellspacing=0 cellpadding=1 bordercolor='#FFFFFF' bordercolorlight='#FFFFFF' bordercolordark='#FFFFFF' width='100%'><td width='100'>Causal</td><td width='160'><b><font color='#000080'></font></b></td>
+</tr><tr>
+<td width='100'>Descripcion Causal 2<font color='#FF0000'><b>*</b></font></td><td width='160'><input name='descripcion' id='descripcion' type=text value=''   tabindex=1 style='width: 160'></td>
+</tr><tr>
+<td width='100'>Maximo Dias<font color='#FF0000'><b>*</b></font></td><td width='160'><input name='max_dias' id='max_dias' type=text value=''   tabindex=1 onkeyup="if(isNaN(this.value)||(this.value)==' '||( trim(this.value)!='' && (trim(this.value)!=this.value) )) {alert('Solo Acepto Numeros'); this.value='';}" style='width: 160'></td>
+</tr><tr>
+<td width='100'>Motivo No Pago Titularizadora<font color='#FF0000'><b>*</b></font></td><td width='160'>
+<select name='nopago_tit' id='nopago_tit' style='width: 160; height: 18;' tabindex=1'><option value=''></option>
+	<option value='233'>Afectado Ola Invernal</option>
+	<option value='232'>Cliente De Viaje O Residente En Otra Ciudad O Pais</option>
+	<option value='230'>Contact Tit Sin Mot</option>
+	<option value='231'>Cont Tercero Sin Mot</option>
+	<option value='219'>Desaparicion</option>
+	<option value='215'>Desempleo</option>
+	<option value='217'>Divorcio - Separacion</option>
+	<option value='213'>En Cobro Juridico</option>
+	<option value='222'>Iliquidez Trans</option>
+	<option value='226'>No Coincide Fecha De Vto</option>
+	<option value='225'>No Recibe El Extracto</option>
+	<option value='224'>Olvido Del Pago</option>
+	<option value='228'>Pago No Aplicado</option>
+	<option value='216'>Quiebra</option>
+	<option value='223'>Reclamacion De Seguros (fallecido, Incendio, Terremoto, Itp)</option>
+	<option value='229'>Reclamo En Tramite</option>
+	<option value='221'>Reducde Ingresos</option>
+	<option value='218'>Secuestro</option>
+	<option value='214'>Sin Voluntad</option>
+	<option value='211'>Tramite Dacion - Permuta</option>
+	<option value='210'>Tramite Reestructuracion - Acuerdo De Pago</option>
+	<option value='212'>Tramite Subrogacion</option>
+	<option value='220'>Venta Sin Subrogar</option>
+	<option value='227'>Ya Pago</option>
+</select>
+</td>
+</tr><tr>
+<td width='100'>Estado<font color='#FF0000'><b>*</b></font></td><td width='160'>
+<select name='estado' id='estado' style='width: 160; height: 18;' tabindex=1'>
+	<option value='A'>A</option>
+	<option value='C'>C</option>
+</select>
+</td>
+</tr><tr>
+<input type='hidden' name='grabador' value='admon'></table></td>
+	</tr>
+	<tr>
+		<td align="right"><br>
+					<input type='submit' style='width: 80;'
+			value='Guardar' name='accion'
+			tabindex='1'>
+					</td>
+	</tr>
+</table>
+	<input type='hidden' value='' name='sinueva'> 
+	<input type='hidden' value='' name='silista'> 
+	<input type='hidden' value='causales'
+	name='nom_programa'> <input type='hidden' value='V'
+	name='nuevo'> <input type='hidden'
+	value='conscausal' name='llave'> <input
+	type='hidden' value=''
+	name='val_llave'>  <input type='hidden'
+	value="conscausal=$conscausal"
+	name='condicion'></form>
+</td>
+</tr>
+		                                        </td>
+                                      </tr>
+                                  </table>
+
+<script languaje='javascript'>
+<!--
+
+function trim (myString)
+{
+return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
+}
+
+ function validar() 
+	{ if (0==1  || (trim(document.formulario.descripcion.value).length==0) || (trim(document.formulario.max_dias.value).length==0) || (trim(document.formulario.nopago_tit.value).length==0) || (trim(document.formulario.estado.value).length==0)) 
+
+  { alert('Debe Diligenciar Los Siguientes Campos :\n-------------------------------------\n- Descripcion Causal 2\n- Maximo Dias\n- Motivo No Pago Titularizadora\n- Estado\n'); return false; }	else	return true;	}
+	-->
+  
+</script>          <script LANGUAGE='JavaScript'>
+            function busca_ajax(descripcion,campo,valor,tabla)
+          		{  document.getElementById('des_' + campo).value = "Buscando...";
+                 //alert(descripcion + campo + valor + tabla);
+                 agent.call('','php_busca','java_busca',descripcion,campo,valor,tabla);
+            	}
+            function java_busca(cadena) //si el usuario no existe entonces abre Informa
+          		{ if(cadena['numreg']==0)
+          				{	document.getElementById(cadena['campo']).value="";
+          				  document.getElementById('des_'+cadena['campo']).value="";
+          				  document.getElementById(cadena['campo']).focus();
+          				  alert('Registro No Existe');
+          				}
+          			else
+          				{ document.getElementById('des_'+cadena['campo']).value=cadena['descripcion'];
+          				  document.getElementById(cadena['campo']).value=cadena['valor'];
+          				}
+
+          		}
+          </script> 
+
+<script LANGUAGE='JavaScript'> 
+function descripciones(codcampo,descampo,valcod,valdes)
+	{ //alert(codcampo);alert(valcod);alert(descampo);alert(valdes);
+		document.getElementById(codcampo).value=valcod;
+    document.getElementById(descampo).value=valdes;
+	}
+</script>
+                                  </TD>
+                                </TR>
+                              </TABLE>
+
+                              </TD>
+                            </TR>
+                          </TABLE>
+                          
+                        </TD>
+                      </TR>
+                    </TABLE>
+  
+                    <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+                      <TR>
+                        <TD align=right vAlign=top width=40>
+                          <IMG alt="" border=0 height=9 src="/padminfo/imagenes/cuadro_bottom_left.gif" width=40>
+                        </TD>
+                        <TD background="/padminfo/imagenes/cuadro_bottom_center.gif" width="100%">
+                          <IMG alt="" border=0 height=1 src="/padminfo/imagenes/spacer.gif" width=1>
+                        </TD>
+                        <TD align=left vAlign=top width=40>
+                          <IMG alt="" border=0 height=9 src="/padminfo/imagenes/cuadro_bottom_right.gif" width=40>
+                        </TD>
+                      </TR>
+                    </TABLE>
+                    
+                  </TD>
+                </TR>
+              </TABLE>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
