@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <head>
+<title>SOFTWARE DE GESTION ADMINFO -- SOLUCIONES LATINAS Ltda.</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-type">
+<meta content="public" http-equiv="Cache-control">
+<link type="image/png" rel="icon" href="http://localhost/padminfo2/imagenes/icon.png?cache=1">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/general.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/menu.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/adminbd.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/themes/custom-theme/jquery-ui-1.8.10.custom.css">
+<link rel="stylesheet" href="http://localhost/padminfo2/css/joyride-2.0.3.css">
+<link media="all" type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/Gridtable.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/plantillaPrincipal.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/css/RMSforms.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/js/cluetip/jquery.cluetip.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/js/select2/select2.css">
+<link type="text/css" rel="stylesheet" href="http://localhost/padminfo2/librerias/grid/jqGrid/css/ui.jqgrid.css">
+<link lang="es_CO" href="http://localhost/padminfo2/locale/es_CO/LC_MESSAGES/messages_solati.json" rel="gettext">
+<script src="http://localhost/padminfo2/js/jquery.estable.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/php.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/jquery-ui-1.8.10.custom.min.js" type="text/javascript">
+<script src="/padminfo2/js/jquery.layout.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.core.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.widget.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.mouse.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.resizable.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.position.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.draggable.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.dialog.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.tabs.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/minified/jquery.ui.slider.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/cluetip/jquery.cluetip.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/jquery.easing.1.3.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/noty.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ui/i18n/jquery.ui.datepicker-es.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/select2/select2.min.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/ajax.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/adminbd.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/usuarios.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/plantilla.js" type="text/javascript">
+<script src="http://localhost/padminfo2/js/funciones.js" type="text/javascript">
+  <script>
+    function validarCamposForm(form_id, campo, single) {
+      console.log(form_id);
+      console.log(campo);
+      console.log(single);
+        var error = false;
+        var errorMensaje = '';
+        console.assert(campo, form_id);
+        if (campo) {
+          console.log('entro');
+            err = validarCampo(campo);
+            error = err[0];
+            errorMensaje = err[1];
+            console.log(errorMensaje);
+            if (error == true) {
+                mensajeErrorCampo(campo, errorMensaje);
+            } else {
+                mensajeErrorCampo(campo, '', true);
+            }
+        } else {
+          console.log('entro2');
+            $("#" + form_id + " input,#" + form_id + " select, #" + form_id + " textarea").each(function() {
+              err = validarCampo($(this));
+              errorTmp = err[0];
+              errorMensaje = err[1];
+
+              if (errorTmp == true) {
+                console.log('entro err');
+                  mensajeErrorCampo($(this), errorMensaje);
+                  error = errorTmp;
+                  if (single == true) return false;
+              } else {
+                console.log('entro err2');
+                  mensajeErrorCampo($(this), '', true);
+              }
+            });
+        }
+        //if (error == true) //notificacion("Formulario Incompleto", "Verifique que todos los campos se encuentren correctamente", 'error');
+        return error;
+    }
+    
+    
+    
+    function mensajeErrorCampo(objCampo, msgTexto, boolOcultar, tipoMsg) {
+      var id_attr = $(objCampo).attr('id');
+      var id_anterior= $(objCampo).prev().attr('id');
+      
+      // si el campo es del tipo select2
+      if (id_anterior == 's2id_'+ id_attr){
+        objCampo = $(objCampo).prev();
+      }
+		
+      /*require_once(strDominio + "js/ui/jquery.effects.core.js");
+      require_once(strDominio + "js/ui/jquery.effects.clip.js");
+      require_once(strDominio + "js/ui/jquery.effects.fade.js");*/
+      var options = {};
+      var boolMultiplesObj = false;
+      var id = objCampo.attr("id");
+      var widthCampo = objCampo.width();
+      var widthParent = '';
+      var _self = $("#error_" + id);
+
+      if (jQuery.trim(boolOcultar) == '') boolOcultar = false;
+      if (jQuery.trim(msgTexto) == '') msgTexto = "Campo Requerido";
+      if (jQuery.trim(tipoMsg) == '') tipoMsg = "Error";
+
+      id = replaceCharacters("[", "", id);
+      id = replaceCharacters("]", "", id);
+      var errLabel = $("#errorlabel_" + id);
+
+      if (objCampo.attr("ref") == 'radio' || objCampo.attr("ref") == 'check') widthParent = objCampo.parent().parent().width();
+      else widthParent = objCampo.parent().width();
+      width = (msgTexto.length * 6) + 40;
+      if (boolOcultar == false) {
+          if (_self.length > 0) _self.remove();
+          var prompt = $('<div onclick=($(this).fadeOut(300)); class="formError" id="error_' + id + '">' + '<div class="form' + tipoMsg + 'Content">' + msgTexto + '<br></div>' + '<div class="form' + tipoMsg + 'Arrow">' + '<div class="line10"></div>' + '<div class="line9"></div>' + '<div class="line8"></div>' + '<div class="line7"></div>' + '<div class="line6"></div>' + '<div class="line5"></div>' + '<div class="line4"></div>' + '<div class="line3"></div>' + '<div class="line2"></div>' + '<div class="line1"></div>' + '</div>' + '</div>');
+          if (objCampo.attr("ref") != 'radio' && objCampo.attr("ref") != 'check' && objCampo.attr("ref") != 'tarjetacredito') {
+              if (errLabel.length > 0) {
+                  errLabel.html(prompt); //objCampo.before(prompt);
+              } else {
+                  objCampo.parent().prepend(prompt);
+              }
+          } else {
+              if (errLabel.length > 0) {
+                  errLabel.html(prompt);
+              } else {
+                  objCampo.parent().prepend(prompt);
+              }
+          }
+          _self = $("#error_" + id);
+          _self.css({
+              "width": width,
+              "display": "none",
+              "cursor": "pointer",
+              "padding-bottom": "1px",
+              "position": "absolute",
+              "display": "inline-block",
+              "max-width": widthParent,
+              "z-index": 991
+          });
+          $("#" + id).addClass("error_campo");
+          var position = objCampo.position();
+          _self.css({
+              top: position.top - 40,
+              left: position.left + objCampo.width() - 40
+          }).show();
+          if (boolMultiplesObj == true) objCampo2.addClass("error_campo");
+      } else {
+          if (_self.length > 0) {
+              _self.hide();
+              $("#" + id).removeClass("error_campo");
+              if (boolMultiplesObj == true) {
+                  objCampo2.removeClass("error_campo");
+                  boolMultiplesObj = false;
+              }
+              _self.remove();
+
+              //_self.fadeOut(200);
+          }
+      }
+    }
+    function toMinusculas(obj) {
+      var texto = $(obj).val();
+      var textoOK;
+      textoOK = texto.toLowerCase();
+      $(obj).val(textoOK);
+    }
+    
+    function isAlfanumerico(valor) {
+      var valorBien = "";
+      if (valor) {
+          for (var i = 0; i < valor.length; i++) {
+              var c = valor.charAt(i);
+              if ((isLetter(c) || isDigit(c)))
+                  valorBien = valorBien + c;
+          }
+
+      }
+      return valorBien;
+  }
+  
+  function BuscarUsuario(usuario, empresa) {
+
+    var expreg = new RegExp("[ñ]");
+    var nomUsu = $("#codigo_usuario").val();
+    var validacion = expreg.test(nomUsu);
+
+    if (validacion) {
+        alerta("No puede crear usuarios con el caracter 'ñ', intente de nuevo por favor", 3);
+        $("#codigo_usuario").val('');
+        return false;
+    }
+
+    $("#codigo_usuario").val(jQuery.trim($("#codigo_usuario").val()));
+    if (jQuery.trim(usuario) == '') {
+        mensajeErrorCampo($("#codigo_usuario"), "Debe Ingresar un Nombre de Usuario Valido");
+        return;
+    }
+  }
+    </script>    
+  </head>
+  <body>
+    <form id="crearusuario">
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td>Nombre de Usuario <span class="rojo">*</span></td>
+          <td><input style="-moz-user-select:text;" tabindex="3" name="codigo_usuario" id="codigo_usuario" size="15" onblur="BuscarUsuario($('#codigo_usuario').val(),'solati'),validarCamposForm('',$(this))" onchange="validarCamposForm('',$(this))" onkeyup="toMinusculas(this),this.value=isAlfanumerico(this.value)" class="" required="true" maxlength="15" value="" type="text"><span id="errorlabel_codigo_usuario" class="errLabel"></span> <a href="#" title="Buscar Usuario" class="botonBlanco BuscarUsuario" onclick="BuscarUsuario($('#codigo_usuario').val(),$('#empresa').val())"><span class="ui-icon ui-icon-search" style="float:left;margin-top:-2px;"></span> Buscar</a> </td>
+          <td>Nombres <span class="rojo">*</span></td>
+          <td><input style="-moz-user-select:text;" tabindex="4" name="nombres" id="nombres" size="25" onblur="validarCamposForm('',$(this))" onchange="validarCamposForm('',$(this))" class="error_campo" required="true" maxlength="50" minlength="5" value="" type="text"><span id="errorlabel_nombres" class="errLabel"><div onclick="($(this).fadeOut(300));" class="formError" id="error_nombres" style="width: 274px; display: none; cursor:pointer; padding-bottom: 1px; position: absolute; max-width:355px; z-index: 991; top: 6.0369256734848px; left:899.176137566567px;">
+                <div class="formErrorContent">No puede contener menos de 5
+                  caracteres<br>
+                </div>
+                <div class="formErrorArrow">
+                  <div class="line10"></div>
+                  <div class="line9"></div>
+                  <div class="line8"></div>
+                  <div class="line7"></div>
+                  <div class="line6"></div>
+                  <div class="line5"></div>
+                  <div class="line4"></div>
+                  <div class="line3"></div>
+                  <div class="line2"></div>
+                  <div class="line1"></div>
+                </div>
+              </div>
+            </span></td>
+        </tr>
+        <tr>
+          <td>Regional<span class="rojo">*</span></td>
+          <td>
+            <div class="select2-container" id="s2id_regional" style="z-index:-29 overflow: hidden; -moz-user-select: text;"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1"> <span class="select2-chosen">Amazonas</span><abbr class="select2-search-choice-close"></abbr> <span class="select2-arrow"><b></b></span></a><input class="select2-focusser select2-offscreen" id="s2id_autogen7" tabindex="18" type="text">
+              <div class="select2-drop select2-display-none select2-with-searchbox">
+                <div class="select2-search"> <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" type="text"> </div>
+                <ul class="select2-results">
+                </ul>
+              </div>
+            </div>
+            <select class="select2-big select2-offscreen" size="1" tabindex="-1"id="regional" name="regional" style="z-index:-29 overflow: hidden;
+              -moz-user-select: text;" required="true" onblur="validarCamposForm('',$(this))" onchange="validarCamposForm('',$(this))">
+              <option value="29" title="Amazonas">Amazonas</option>
+              <option value="1" title="Antioquia">Antioquia</option>
+              <option value="25" title="Arauca">Arauca</option>
+              <option value="2" title="Atlantico">Atlantico</option>
+              <option value="3" title="Bogota">Bogota</option>
+              <option value="4" title="Bolivar">Bolivar</option>
+              <option value="5" title="Boyaca">Boyaca</option>
+              <option value="6" title="Caldas">Caldas</option>
+              <option value="7" title="Caqueta">Caqueta</option>
+              <option value="26" title="Casanare">Casanare</option>
+              <option value="8" title="Cauca">Cauca</option>
+              <option value="9" title="Cesar">Cesar</option>
+              <option value="12" title="Choco">Choco</option>
+              <option value="10" title="Cordoba">Cordoba</option>
+              <option value="11" title="Cundinamarca">Cundinamarca</option>
+              <option value="30" title="Guainia">Guainia</option>
+              <option value="14" title="Guajira">Guajira</option>
+              <option value="31" title="Guaviare">Guaviare</option>
+              <option value="13" title="Huila">Huila</option>
+              <option value="15" title="Magdalena">Magdalena</option>
+              <option value="16" title="Meta">Meta</option>
+              <option value="17" title="Narino">Narino</option>
+              <option value="18" title="Norte De Santander">Norte De Santander</option>
+              <option value="27" title="Putumayo">Putumayo</option>
+              <option value="19" title="Quindio">Quindio</option>
+              <option value="20" title="Risaralda">Risaralda</option>
+              <option value="28" title="San Andres">San Andres</option>
+              <option value="21" title="Santander">Santander</option>
+              <option value="22" title="Sucre">Sucre</option>
+              <option value="23" title="Tolima">Tolima</option>
+              <option value="24" title="Valle Del Cauca">Valle Del Cauca</option>
+              <option value="32" title="Vaupes">Vaupes</option>
+              <option value="33" title="Vichada">Vichada</option>
+            </select>
+          </td>
+          <td>Ciudad<span class="rojo">*</span></td>
+          <td>
+            <div class="select2-container" id="s2id_consciudad" style="z-index:-30 overflow: hidden; -moz-user-select: text;"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1"> <span class="select2-chosen">Abejorral</span><abbr class="select2-search-choice-close"></abbr> <span class="select2-arrow"><b></b></span></a><input class="select2-focusser select2-offscreen" id="s2id_autogen8" tabindex="19" type="text">
+              <div class="select2-drop select2-display-none select2-with-searchbox">
+                <div class="select2-search"> <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" type="text"> </div>
+                <ul class="select2-results">
+                </ul>
+              </div>
+            </div>
+            <select class="select2-big select2-offscreen" size="1" tabindex="-1" id="consciudad" name="consciudad" style="z-index:-30 overflow:hidden; -moz-user-select: text;" required="true" onblur="validarCamposForm('',$(this))" onchange="validarCamposForm('',$(this))">
+              <option value="5002000" title="Abejorral">Abejorral</option>
+              <option value="54003000" title="Abrego">Abrego</option>
+              <option value="5004000" title="Abriaqui">Abriaqui</option>
+              <option value="50006000" title="Acacias">Acacias</option>
+              <option value="27006000" title="Acandi">Acandi</option>
+              <option value="41006000" title="Acevedo">Acevedo</option>
+              <option value="13006000" title="Achi">Achi</option>
+              <option value="70215000" title="Acorzal">Acorzal</option>
+              <option value="41013000" title="Agrado">Agrado</option>
+              <option value="20011000" title="Aguachica">Aguachica</option>
+              <option value="68013000" title="Aguada">Aguada</option>
+              <option value="17013000" title="Aguadas">Aguadas</option>
+              <option value="25001000" title="Agua De Dios">Agua De Dios</option>
+              <option value="85010000" title="Aguazul">Aguazul</option>
+              <option value="20013000" title="Agustin Codazzi">Agustin Codazzi</option>
+              <option value="41016000" title="Aipe">Aipe</option>
+              <option value="25019000" title="Alban">Alban</option>
+              <option value="18029000" title="Albania">Albania</option>
+              <option value="76020000" title="Alcala">Alcala</option>
+              <option value="52022000" title="Aldana">Aldana</option>
+              <option value="5021000" title="Alejandria">Alejandria</option>
+              <option value="41020000" title="Algeciras">Algeciras</option>
+              <option value="19022000" title="Almaguer">Almaguer</option>
+              <option value="15022000" title="Almeida">Almeida</option>
+              <option value="73024000" title="Alpujarra">Alpujarra</option>
+              <option value="41026000" title="Altamira">Altamira</option>
+              <option value="13030000" title="Altos Del Rosario">Altos Del Rosario</option>
+              <option value="73026000" title="Alvarado">Alvarado</option>
+              <option value="5030000" title="Amaga">Amaga</option>
+              <option value="5031000" title="Amalfi">Amalfi</option>
+              <option value="73030000" title="Ambalema">Ambalema</option>
+              <option value="25035000" title="Anapoima">Anapoima</option>
+              <option value="52036000" title="Ancuya">Ancuya</option>
+              <option value="76036000" title="Andalucia">Andalucia</option>
+              <option value="5034000" title="Andes">Andes</option>
+              <option value="5036000" title="Angelopolis">Angelopolis</option>
+              <option value="5038000" title="Angostura">Angostura</option>
+              <option value="25040000" title="Anolaima">Anolaima</option>
+              <option value="5040000" title="Anori">Anori</option>
+              <option value="17042000" title="Anserma">Anserma</option>
+              <option value="76041000" title="Ansermanuevo">Ansermanuevo</option>
+              <option value="5042000" title="Antioquia">Antioquia</option>
+              <option value="5044000" title="Anza">Anza</option>
+              <option value="73043000" title="Anzoategui">Anzoategui</option>
+              <option value="5045000" title="Apartado">Apartado</option>
+              <option value="66045000" title="Apia">Apia</option>
+              <option value="25599000" title="Apulo">Apulo</option>
+              <option value="15047000" title="Aquitania">Aquitania</option>
+              <option value="47053000" title="Aracataca">Aracataca</option>
+              <option value="17050000" title="Aranzazu">Aranzazu</option>
+              <option value="68051000" title="Aratoca">Aratoca</option>
+              <option value="81001000" title="Arauca">Arauca</option>
+              <option value="81065000" title="Arauquita">Arauquita</option>
+              <option value="25053000" title="Arbelaez">Arbelaez</option>
+              <option value="54051000" title="Arboledas">Arboledas</option>
+              <option value="5051000" title="Arboletes">Arboletes</option>
+              <option value="15051000" title="Arcabuco">Arcabuco</option>
+              <option value="5055000" title="Argelia">Argelia</option>
+              <option value="13052000" title="Arjona">Arjona</option>
+              <option value="5059000" title="Armenia">Armenia</option>
+              <option value="20032000" title="Astrea">Astrea</option>
+              <option value="73067000" title="Ataco">Ataco</option>
+              <option value="23068000" title="Ayapel">Ayapel</option>
+              <option value="27073000" title="Bagado">Bagado</option>
+              <option value="19075000" title="Balboa">Balboa</option>
+              <option value="8078000" title="Baranoa">Baranoa</option>
+              <option value="41078000" title="Baraya">Baraya</option>
+              <option value="52079000" title="Barbacoas">Barbacoas</option>
+              <option value="5079000" title="Barbosa">Barbosa</option>
+              <option value="68079000" title="Barichara">Barichara</option>
+              <option value="68081000" title="Barrancabermeja">Barrancabermeja</option>
+              <option value="50110000" title="Barranca De Upia">Barranca De Upia</option>
+              <option value="44078000" title="Barrancas">Barrancas</option>
+              <option value="8001000" title="Barranquilla">Barranquilla</option>
+              <option value="20045000" title="Becerril">Becerril</option>
+              <option value="17088000" title="Belalcazar">Belalcazar</option>
+              <option value="15087000" title="Belen">Belen</option>
+              <option value="66088000" title="Belen De Umbria">Belen De Umbria</option>
+              <option value="5088000" title="Bello">Bello</option>
+              <option value="5086000" title="Belmira">Belmira</option>
+              <option value="25086000" title="Beltran">Beltran</option>
+              <option value="15090000" title="Berbeo">Berbeo</option>
+              <option value="5091000" title="Betania">Betania</option>
+              <option value="15092000" title="Beteitiva">Beteitiva</option>
+              <option value="5093000" title="Betulia">Betulia</option>
+              <option value="25095000" title="Bituima">Bituima</option>
+              <option value="15097000" title="Boavita">Boavita</option>
+              <option value="54099000" title="Bochalema">Bochalema</option>
+              <option value="11001000" title="Bogota">Bogota</option>
+              <option value="25099000" title="Bojaca">Bojaca</option>
+              <option value="5101000" title="Bolivar">Bolivar</option>
+              <option value="20060000" title="Bosconia">Bosconia</option>
+              <option value="15104000" title="Boyaca">Boyaca</option>
+              <option value="15106000" title="Briceno">Briceno</option>
+              <option value="68001000" title="Bucaramanga">Bucaramanga</option>
+              <option value="54109000" title="Bucarasica">Bucarasica</option>
+              <option value="76109000" title="Buenaventura">Buenaventura</option>
+              <option value="15109000" title="Buenavista">Buenavista</option>
+              <option value="19110000" title="Buenos Aires">Buenos Aires</option>
+              <option value="52110000" title="Buesaco">Buesaco</option>
+              <option value="76111000" title="Buga">Buga</option>
+              <option value="0" title="Buga Guadalajara De">Buga Guadalajara De</option>
+              <option value="76113000" title="Bugalagrande">Bugalagrande</option>
+              <option value="5113000" title="Buritica">Buritica</option>
+              <option value="15114000" title="Busbanza">Busbanza</option>
+              <option value="25120000" title="Cabrera">Cabrera</option>
+              <option value="50124000" title="Cabuyaro">Cabuyaro</option>
+              <option value="94886000" title="Cacahual">Cacahual</option>
+              <option value="5120000" title="Caceres">Caceres</option>
+              <option value="25123000" title="Cachipay">Cachipay</option>
+              <option value="54128000" title="Cachira">Cachira</option>
+              <option value="54125000" title="Cacota">Cacota</option>
+              <option value="5125000" title="Caicedo">Caicedo</option>
+              <option value="76122000" title="Caicedonia">Caicedonia</option>
+              <option value="70124000" title="Caimito">Caimito</option>
+              <option value="73124000" title="Cajamarca">Cajamarca</option>
+              <option value="19130000" title="Cajibio">Cajibio</option>
+              <option value="25126000" title="Cajica">Cajica</option>
+              <option value="13140000" title="Calamar">Calamar</option>
+              <option value="63130000" title="Calarca">Calarca</option>
+              <option value="5129000" title="Caldas">Caldas</option>
+              <option value="19137000" title="Caldono">Caldono</option>
+              <option value="76001000" title="Cali">Cali</option>
+              <option value="68132000" title="California">California</option>
+              <option value="19142000" title="Caloto">Caloto</option>
+              <option value="5134000" title="Campamento">Campamento</option>
+              <option value="41132000" title="Campoalegre">Campoalegre</option>
+              <option value="8137000" title="Campo De La Cruz">Campo De La Cruz</option>
+              <option value="15135000" title="Campohermoso">Campohermoso</option>
+              <option value="23090000" title="Canalete">Canalete</option>
+              <option value="8141000" title="Candelaria">Candelaria</option>
+              <option value="13160000" title="Cantagallo">Cantagallo</option>
+              <option value="25148000" title="Caparrapi">Caparrapi</option>
+              <option value="68147000" title="Capitanejo">Capitanejo</option>
+              <option value="25151000" title="Caqueza">Caqueza</option>
+              <option value="5142000" title="Caracoli">Caracoli</option>
+              <option value="5145000" title="Caramanta">Caramanta</option>
+              <option value="68152000" title="Carcasi">Carcasi</option>
+              <option value="5147000" title="Carepa">Carepa</option>
+              <option value="73148000" title="Carmen De Apicala">Carmen De
+                Apicala</option>
+              <option value="25154000" title="Carmen De Carupa">Carmen De Carupa</option>
+              <option value="5150000" title="Carolina">Carolina</option>
+              <option value="13001000" title="Cartagena">Cartagena</option>
+              <option value="18150000" title="Cartagena Del Chaira">Cartagena
+                Del Chaira</option>
+              <option value="76147000" title="Cartago">Cartago</option>
+              <option value="97161000" title="Caruru">Caruru</option>
+              <option value="73152000" title="Casabianca">Casabianca</option>
+              <option value="50150000" title="Castilla La Nueva">Castilla La Nueva</option>
+              <option value="5154000" title="Caucasia">Caucasia</option>
+              <option value="68160000" title="Cepita">Cepita</option>
+              <option value="23162000" title="Cerete">Cerete</option>
+              <option value="15162000" title="Cerinza">Cerinza</option>
+              <option value="68162000" title="Cerrito">Cerrito</option>
+              <option value="52240000" title="Chachagui">Chachagui</option>
+              <option value="25168000" title="Chaguani">Chaguani</option>
+              <option value="70230000" title="Chalan">Chalan</option>
+              <option value="85015000" title="Chameza">Chameza</option>
+              <option value="73168000" title="Chaparral">Chaparral</option>
+              <option value="68167000" title="Charala">Charala</option>
+              <option value="68169000" title="Charta">Charta</option>
+              <option value="25175000" title="Chia">Chia</option>
+              <option value="5172000" title="Chigorodo">Chigorodo</option>
+              <option value="23168000" title="Chima">Chima</option>
+              <option value="20175000" title="Chimichagua">Chimichagua</option>
+              <option value="54172000" title="Chinacota">Chinacota</option>
+              <option value="15172000" title="Chinavita">Chinavita</option>
+              <option value="17174000" title="Chinchina">Chinchina</option>
+              <option value="23182000" title="Chinu">Chinu</option>
+              <option value="25178000" title="Chipaque">Chipaque</option>
+              <option value="68179000" title="Chipata">Chipata</option>
+              <option value="15176000" title="Chiquinquira">Chiquinquira</option>
+              <option value="15232000" title="Chiquiza">Chiquiza</option>
+              <option value="20178000" title="Chiriguana">Chiriguana</option>
+              <option value="15180000" title="Chiscas">Chiscas</option>
+              <option value="15183000" title="Chita">Chita</option>
+              <option value="54174000" title="Chitaga">Chitaga</option>
+              <option value="15185000" title="Chitaraque">Chitaraque</option>
+              <option value="15187000" title="Chivata">Chivata</option>
+              <option value="47170000" title="Chivolo">Chivolo</option>
+              <option value="15236000" title="Chivor">Chivor</option>
+              <option value="25181000" title="Choachi">Choachi</option>
+              <option value="25183000" title="Choconta">Choconta</option>
+              <option value="13188000" title="Cicuco">Cicuco</option>
+              <option value="47189000" title="Cienaga">Cienaga</option>
+              <option value="23189000" title="Cienaga De Oro">Cienaga De Oro</option>
+              <option value="15189000" title="Cienega">Cienega</option>
+              <option value="68190000" title="Cimitarra">Cimitarra</option>
+              <option value="63190000" title="Circasia">Circasia</option>
+              <option value="5190000" title="Cisneros">Cisneros</option>
+              <option value="5197000" title="Cocorna">Cocorna</option>
+              <option value="73200000" title="Coello">Coello</option>
+              <option value="25200000" title="Cogua">Cogua</option>
+              <option value="41206000" title="Colombia">Colombia</option>
+              <option value="52203000" title="Colon">Colon</option>
+              <option value="15204000" title="Combita">Combita</option>
+              <option value="5206000" title="Concepcion">Concepcion</option>
+              <option value="5209000" title="Concordia">Concordia</option>
+              <option value="27205000" title="Condoto">Condoto</option>
+              <option value="68209000" title="Confines">Confines</option>
+              <option value="52207000" title="Consaca">Consaca</option>
+              <option value="52210000" title="Contadero">Contadero</option>
+              <option value="68211000" title="Contratacion">Contratacion</option>
+              <option value="54206000" title="Convencion">Convencion</option>
+              <option value="5212000" title="Copacabana">Copacabana</option>
+              <option value="15212000" title="Coper">Coper</option>
+              <option value="13212000" title="Cordoba">Cordoba</option>
+              <option value="19212000" title="Corinto">Corinto</option>
+              <option value="68217000" title="Coromoro">Coromoro</option>
+              <option value="15215000" title="Corrales">Corrales</option>
+              <option value="25214000" title="Cota">Cota</option>
+              <option value="15218000" title="Covarachia">Covarachia</option>
+              <option value="73217000" title="Coyaima">Coyaima</option>
+              <option value="81220000" title="Cravo Norte">Cravo Norte</option>
+              <option value="15223000" title="Cubara">Cubara</option>
+              <option value="50223000" title="Cubarral">Cubarral</option>
+              <option value="15224000" title="Cucaita">Cucaita</option>
+              <option value="25224000" title="Cucunuba">Cucunuba</option>
+              <option value="54001000" title="Cucuta">Cucuta</option>
+              <option value="54223000" title="Cucutilla">Cucutilla</option>
+              <option value="15226000" title="Cuitiva">Cuitiva</option>
+              <option value="50226000" title="Cumaral">Cumaral</option>
+              <option value="99773000" title="Cumaribo">Cumaribo</option>
+              <option value="52227000" title="Cumbal">Cumbal</option>
+              <option value="52233000" title="Cumbitara">Cumbitara</option>
+              <option value="73226000" title="Cunday">Cunday</option>
+              <option value="18205000" title="Curillo">Curillo</option>
+              <option value="68229000" title="Curiti">Curiti</option>
+              <option value="20228000" title="Curumani">Curumani</option>
+              <option value="5234000" title="Dabeiba">Dabeiba</option>
+              <option value="76233000" title="Dagua">Dagua</option>
+              <option value="73236000" title="Dolores">Dolores</option>
+              <option value="5237000" title="Don Matias">Don Matias</option>
+              <option value="15238000" title="Duitama">Duitama</option>
+              <option value="54239000" title="Durania">Durania</option>
+              <option value="5240000" title="Ebejico">Ebejico</option>
+              <option value="76243000" title="El Aguila">El Aguila</option>
+              <option value="5250000" title="El Bagre">El Bagre</option>
+              <option value="47245000" title="El Banco">El Banco</option>
+              <option value="19532000" title="El Bordo Patia">El Bordo Patia</option>
+              <option value="76246000" title="El Cairo">El Cairo</option>
+              <option value="50245000" title="El Calvario">El Calvario</option>
+              <option value="27245000" title="El Carmen">El Carmen</option>
+              <option value="13244000" title="El Carmen De Bolivar">El Carmen De
+                Bolivar</option>
+              <option value="5148000" title="El Carmen De Viboral">El Carmen De
+                Viboral</option>
+              <option value="50251000" title="El Castillo">El Castillo</option>
+              <option value="76248000" title="El Cerrito">El Cerrito</option>
+              <option value="52250000" title="El Charco">El Charco</option>
+              <option value="15244000" title="El Cocuy">El Cocuy</option>
+              <option value="25245000" title="El Colegio">El Colegio</option>
+              <option value="20238000" title="El Copey">El Copey</option>
+              <option value="18247000" title="El Doncello">El Doncello</option>
+              <option value="50270000" title="El Dorado">El Dorado</option>
+              <option value="76250000" title="El Dovio">El Dovio</option>
+              <option value="91263000" title="El Encanto">El Encanto</option>
+              <option value="15248000" title="El Espino">El Espino</option>
+              <option value="68245000" title="El Guacamayo">El Guacamayo</option>
+              <option value="13248000" title="El Guamo">El Guamo</option>
+              <option value="41244000" title="Elias">Elias</option>
+              <option value="44110000" title="El Molino">El Molino</option>
+              <option value="86320000" title="El Orito">El Orito</option>
+              <option value="20250000" title="El Paso">El Paso</option>
+              <option value="18256000" title="El Paujil">El Paujil</option>
+              <option value="25258000" title="El Penon">El Penon</option>
+              <option value="68255000" title="El Playon">El Playon</option>
+              <option value="95025000" title="El Retorno">El Retorno</option>
+              <option value="52256000" title="El Rosario">El Rosario</option>
+              <option value="52258000" title="El Tablon De Gomez">El Tablon De
+                Gomez</option>
+              <option value="19256000" title="El Tambo">El Tambo</option>
+              <option value="54250000" title="El Tarra">El Tarra</option>
+              <option value="54261000" title="El Zulia">El Zulia</option>
+              <option value="68264000" title="Encino">Encino</option>
+              <option value="68266000" title="Enciso">Enciso</option>
+              <option value="5266000" title="Envigado">Envigado</option>
+              <option value="73268000" title="Espinal">Espinal</option>
+              <option value="25269000" title="Facatativa">Facatativa</option>
+              <option value="73270000" title="Falan">Falan</option>
+              <option value="17272000" title="Filadelfia">Filadelfia</option>
+              <option value="63272000" title="Filandia">Filandia</option>
+              <option value="15272000" title="Firavitoba">Firavitoba</option>
+              <option value="73275000" title="Flandes">Flandes</option>
+              <option value="18001000" title="Florencia">Florencia</option>
+              <option value="15276000" title="Floresta">Floresta</option>
+              <option value="68271000" title="Florian">Florian</option>
+              <option value="76275000" title="Florida">Florida</option>
+              <option value="68276000" title="Floridablanca">Floridablanca</option>
+              <option value="25279000" title="Fomeque">Fomeque</option>
+              <option value="44279000" title="Fonseca">Fonseca</option>
+              <option value="81300000" title="Fortul">Fortul</option>
+              <option value="25281000" title="Fosca">Fosca</option>
+              <option value="5282000" title="Fredonia">Fredonia</option>
+              <option value="73283000" title="Fresno">Fresno</option>
+              <option value="5284000" title="Frontino">Frontino</option>
+              <option value="50287000" title="Fuente De Oro">Fuente De Oro</option>
+              <option value="47288000" title="Fundacion">Fundacion</option>
+              <option value="52287000" title="Funes">Funes</option>
+              <option value="25286000" title="Funza">Funza</option>
+              <option value="25288000" title="Fuquene">Fuquene</option>
+              <option value="25290000" title="Fusagasuga">Fusagasuga</option>
+              <option value="25293000" title="Gachala">Gachala</option>
+              <option value="25295000" title="Gachancipa">Gachancipa</option>
+              <option value="15293000" title="Gachantiva">Gachantiva</option>
+              <option value="25297000" title="Gacheta">Gacheta</option>
+              <option value="68296000" title="Galan">Galan</option>
+              <option value="8296000" title="Galapa">Galapa</option>
+              <option value="25299000" title="Gama">Gama</option>
+              <option value="20295000" title="Gamarra">Gamarra</option>
+              <option value="68298000" title="Gambita">Gambita</option>
+              <option value="15296000" title="Gameza">Gameza</option>
+              <option value="15299000" title="Garagoa">Garagoa</option>
+              <option value="41298000" title="Garzon">Garzon</option>
+              <option value="63302000" title="Genova">Genova</option>
+              <option value="41306000" title="Gigante">Gigante</option>
+              <option value="76306000" title="Ginebra">Ginebra</option>
+              <option value="5306000" title="Giraldo">Giraldo</option>
+              <option value="25307000" title="Girardot">Girardot</option>
+              <option value="5308000" title="Girardota">Girardota</option>
+              <option value="68307000" title="Giron">Giron</option>
+              <option value="5310000" title="Gomez Plata">Gomez Plata</option>
+              <option value="20310000" title="Gonzalez">Gonzalez</option>
+              <option value="54313000" title="Gramalote">Gramalote</option>
+              <option value="5313000" title="Granada">Granada</option>
+              <option value="68318000" title="Guaca">Guaca</option>
+              <option value="15317000" title="Guacamayas">Guacamayas</option>
+              <option value="76318000" title="Guacari">Guacari</option>
+              <option value="25317000" title="Guacheta">Guacheta</option>
+              <option value="52317000" title="Guachucal">Guachucal</option>
+              <option value="5315000" title="Guadalupe">Guadalupe</option>
+              <option value="25320000" title="Guaduas">Guaduas</option>
+              <option value="52320000" title="Guaitarilla">Guaitarilla</option>
+              <option value="52323000" title="Gualmatan">Gualmatan</option>
+              <option value="47318000" title="Guamal">Guamal</option>
+              <option value="73319000" title="Guamo">Guamo</option>
+              <option value="19318000" title="Guapi">Guapi</option>
+              <option value="68322000" title="Guapota">Guapota</option>
+              <option value="70265000" title="Guaranda">Guaranda</option>
+              <option value="5318000" title="Guarne">Guarne</option>
+              <option value="25322000" title="Guasca">Guasca</option>
+              <option value="5321000" title="Guatape">Guatape</option>
+              <option value="25324000" title="Guataqui">Guataqui</option>
+              <option value="25326000" title="Guatavita">Guatavita</option>
+              <option value="15322000" title="Guateque">Guateque</option>
+              <option value="66318000" title="Guatica">Guatica</option>
+              <option value="68324000" title="Guavata">Guavata</option>
+              <option value="25335000" title="Guayabetal">Guayabetal</option>
+              <option value="15325000" title="Guayata">Guayata</option>
+              <option value="68327000" title="Guepsa">Guepsa</option>
+              <option value="15332000" title="Guican">Guican</option>
+              <option value="25339000" title="Gutierrez">Gutierrez</option>
+              <option value="54344000" title="Hacari">Hacari</option>
+              <option value="13300000" title="Hatillo De Loba">Hatillo De Loba</option>
+              <option value="68344000" title="Hato">Hato</option>
+              <option value="85125000" title="Hato Corozal">Hato Corozal</option>
+              <option value="44378000" title="Hatonuevo">Hatonuevo</option>
+              <option value="5347000" title="Heliconia">Heliconia</option>
+              <option value="54347000" title="Herran">Herran</option>
+              <option value="73347000" title="Herveo">Herveo</option>
+              <option value="5353000" title="Hispania">Hispania</option>
+              <option value="41349000" title="Hobo">Hobo</option>
+              <option value="73349000" title="Honda">Honda</option>
+              <option value="73001000" title="Ibague">Ibague</option>
+              <option value="73352000" title="Icononzo">Icononzo</option>
+              <option value="52352000" title="Iles">Iles</option>
+              <option value="52354000" title="Imues">Imues</option>
+              <option value="94001000" title="Inirida">Inirida</option>
+              <option value="19355000" title="Inza">Inza</option>
+              <option value="52356000" title="Ipiales">Ipiales</option>
+              <option value="41357000" title="Iquira">Iquira</option>
+              <option value="41359000" title="Isnos">Isnos</option>
+              <option value="5360000" title="Itagui">Itagui</option>
+              <option value="27361000" title="Itsmina">Itsmina</option>
+              <option value="5361000" title="Ituango">Ituango</option>
+              <option value="15362000" title="Iza">Iza</option>
+              <option value="19364000" title="Jambalo">Jambalo</option>
+              <option value="76364000" title="Jamundi">Jamundi</option>
+              <option value="5364000" title="Jardin">Jardin</option>
+              <option value="15367000" title="Jenesano">Jenesano</option>
+              <option value="5368000" title="Jerico">Jerico</option>
+              <option value="25368000" title="Jerusalen">Jerusalen</option>
+              <option value="68368000" title="Jesus Maria">Jesus Maria</option>
+              <option value="68370000" title="Jordan">Jordan</option>
+              <option value="8372000" title="Juan De Acosta">Juan De Acosta</option>
+              <option value="25372000" title="Junin">Junin</option>
+              <option value="27372000" title="Jurado">Jurado</option>
+              <option value="41378000" title="La Argentina">La Argentina</option>
+              <option value="54377000" title="Labateca">Labateca</option>
+              <option value="68377000" title="La Belleza">La Belleza</option>
+              <option value="15377000" title="Labranzagrande">Labranzagrande</option>
+              <option value="25377000" title="La Calera">La Calera</option>
+              <option value="15380000" title="La Capilla">La Capilla</option>
+              <option value="5376000" title="La Ceja">La Ceja</option>
+              <option value="66383000" title="La Celia">La Celia</option>
+              <option value="91405000" title="La Chorrera">La Chorrera</option>
+              <option value="52378000" title="La Cruz">La Cruz</option>
+              <option value="76377000" title="La Cumbre">La Cumbre</option>
+              <option value="17380000" title="La Dorada">La Dorada</option>
+              <option value="54385000" title="La Esperanza">La Esperanza</option>
+              <option value="5380000" title="La Estrella">La Estrella</option>
+              <option value="52381000" title="La Florida">La Florida</option>
+              <option value="20383000" title="La Gloria">La Gloria</option>
+              <option value="94885000" title="La Guadalupe">La Guadalupe</option>
+              <option value="20400000" title="La Jagua De Ibirico">La Jagua De
+                Ibirico</option>
+              <option value="52385000" title="La Llanada">La Llanada</option>
+              <option value="50350000" title="La Macarena">La Macarena</option>
+              <option value="17388000" title="La Merced">La Merced</option>
+              <option value="25386000" title="La Mesa">La Mesa</option>
+              <option value="18410000" title="La Montanita">La Montanita</option>
+              <option value="68385000" title="Landazuri">Landazuri</option>
+              <option value="25394000" title="La Palma">La Palma</option>
+              <option value="20621000" title="La Paz">La Paz</option>
+              <option value="91407000" title="La Pedrera">La Pedrera</option>
+              <option value="41396000" title="La Plata">La Plata</option>
+              <option value="54398000" title="La Playa">La Playa</option>
+              <option value="99524000" title="La Primavera">La Primavera</option>
+              <option value="85136000" title="La Salina">La Salina</option>
+              <option value="19392000" title="La Sierra">La Sierra</option>
+              <option value="63401000" title="La Tebaida">La Tebaida</option>
+              <option value="52390000" title="La Tola">La Tola</option>
+              <option value="5400000" title="La Union">La Union</option>
+              <option value="50370000" title="La Uribe">La Uribe</option>
+              <option value="15403000" title="La Uvita">La Uvita</option>
+              <option value="19397000" title="La Vega">La Vega</option>
+              <option value="15401000" title="La Victoria">La Victoria</option>
+              <option value="66400000" title="La Virginia">La Virginia</option>
+              <option value="68406000" title="Lebrija">Lebrija</option>
+              <option value="52405000" title="Leiva">Leiva</option>
+              <option value="50400000" title="Lejanias">Lejanias</option>
+              <option value="25407000" title="Lenguazaque">Lenguazaque</option>
+              <option value="73408000" title="Lerida">Lerida</option>
+              <option value="91001000" title="Leticia">Leticia</option>
+              <option value="73411000" title="Libano">Libano</option>
+              <option value="5411000" title="Liborina">Liborina</option>
+              <option value="52411000" title="Linares">Linares</option>
+              <option value="27413000" title="Lloro">Lloro</option>
+              <option value="23417000" title="Lorica">Lorica</option>
+              <option value="23419000" title="Los Cordobas">Los Cordobas</option>
+              <option value="70418000" title="Los Palmitos">Los Palmitos</option>
+              <option value="54405000" title="Los Patios">Los Patios</option>
+              <option value="68418000" title="Los Santos">Los Santos</option>
+              <option value="54418000" title="Lourdes">Lourdes</option>
+              <option value="8421000" title="Luruaco">Luruaco</option>
+              <option value="15425000" title="Macanal">Macanal</option>
+              <option value="68425000" title="Macaravita">Macaravita</option>
+              <option value="5425000" title="Maceo">Maceo</option>
+              <option value="25426000" title="Macheta">Macheta</option>
+              <option value="25430000" title="Madrid">Madrid</option>
+              <option value="13430000" title="Magangue">Magangue</option>
+              <option value="13433000" title="Mahates">Mahates</option>
+              <option value="44430000" title="Maicao">Maicao</option>
+              <option value="70429000" title="Majagual">Majagual</option>
+              <option value="68432000" title="Malaga">Malaga</option>
+              <option value="8433000" title="Malambo">Malambo</option>
+              <option value="8436000" title="Manati">Manati</option>
+              <option value="44560000" title="Manaure">Manaure</option>
+              <option value="85139000" title="Mani">Mani</option>
+              <option value="17001000" title="Manizales">Manizales</option>
+              <option value="25436000" title="Manta">Manta</option>
+              <option value="17433000" title="Manzanares">Manzanares</option>
+              <option value="50325000" title="Mapiripan">Mapiripan</option>
+              <option value="13440000" title="Margarita">Margarita</option>
+              <option value="13442000" title="Maria La Baja">Maria La Baja</option>
+              <option value="5440000" title="Marinilla">Marinilla</option>
+              <option value="15442000" title="Maripi">Maripi</option>
+              <option value="73443000" title="Mariquita">Mariquita</option>
+              <option value="17442000" title="Marmato">Marmato</option>
+              <option value="17444000" title="Marquetalia">Marquetalia</option>
+              <option value="66440000" title="Marsella">Marsella</option>
+              <option value="17446000" title="Marulanda">Marulanda</option>
+              <option value="68444000" title="Matanza">Matanza</option>
+              <option value="5001000" title="Medellin">Medellin</option>
+              <option value="25438000" title="Medina">Medina</option>
+              <option value="73449000" title="Melgar">Melgar</option>
+              <option value="19450000" title="Mercaderes">Mercaderes</option>
+              <option value="50330000" title="Mesetas">Mesetas</option>
+              <option value="18460000" title="Milan">Milan</option>
+              <option value="15455000" title="Miraflores">Miraflores</option>
+              <option value="19455000" title="Miranda">Miranda</option>
+              <option value="66456000" title="Mistrato">Mistrato</option>
+              <option value="97001000" title="Mitu">Mitu</option>
+              <option value="86001000" title="Mocoa">Mocoa</option>
+              <option value="68464000" title="Mogotes">Mogotes</option>
+              <option value="68468000" title="Molagavita">Molagavita</option>
+              <option value="23464000" title="Momil">Momil</option>
+              <option value="13468000" title="Mompos">Mompos</option>
+              <option value="15464000" title="Mongua">Mongua</option>
+              <option value="15466000" title="Mongui">Mongui</option>
+              <option value="15469000" title="Moniquira">Moniquira</option>
+              <option value="23500000" title="Monitos">Monitos</option>
+              <option value="5467000" title="Montebello">Montebello</option>
+              <option value="13458000" title="Montecristo">Montecristo</option>
+              <option value="23466000" title="Montelibano">Montelibano</option>
+              <option value="63470000" title="Montenegro">Montenegro</option>
+              <option value="23001000" title="Monteria">Monteria</option>
+              <option value="85162000" title="Monterrey">Monterrey</option>
+              <option value="13473000" title="Morales">Morales</option>
+              <option value="18479000" title="Morelia">Morelia</option>
+              <option value="70473000" title="Morroa">Morroa</option>
+              <option value="25473000" title="Mosquera">Mosquera</option>
+              <option value="15476000" title="Motavita">Motavita</option>
+              <option value="73461000" title="Murillo">Murillo</option>
+              <option value="5475000" title="Murindo">Murindo</option>
+              <option value="5480000" title="Mutata">Mutata</option>
+              <option value="54480000" title="Mutiscua">Mutiscua</option>
+              <option value="15480000" title="Muzo">Muzo</option>
+              <option value="41483000" title="Nataga">Nataga</option>
+              <option value="73483000" title="Natagaima">Natagaima</option>
+              <option value="5495000" title="Nechi">Nechi</option>
+              <option value="5490000" title="Necocli">Necocli</option>
+              <option value="17486000" title="Neira">Neira</option>
+              <option value="41001000" title="Neiva">Neiva</option>
+              <option value="25486000" title="Nemocon">Nemocon</option>
+              <option value="25488000" title="Nilo">Nilo</option>
+              <option value="25489000" title="Nimaima">Nimaima</option>
+              <option value="15491000" title="Nobsa">Nobsa</option>
+              <option value="25491000" title="Nocaima">Nocaima</option>
+              <option value="27491000" title="Novita">Novita</option>
+              <option value="15494000" title="Nuevo Colon">Nuevo Colon</option>
+              <option value="85225000" title="Nunchia">Nunchia</option>
+              <option value="27495000" title="Nuqui">Nuqui</option>
+              <option value="76497000" title="Obando">Obando</option>
+              <option value="68498000" title="Ocamonte">Ocamonte</option>
+              <option value="68500000" title="Oiba">Oiba</option>
+              <option value="15500000" title="Oicata">Oicata</option>
+              <option value="5501000" title="Olaya">Olaya</option>
+              <option value="68502000" title="Onzaga">Onzaga</option>
+              <option value="41503000" title="Oporapa">Oporapa</option>
+              <option value="85230000" title="Orocue">Orocue</option>
+              <option value="73504000" title="Ortega">Ortega</option>
+              <option value="52506000" title="Ospina">Ospina</option>
+              <option value="15507000" title="Otanche">Otanche</option>
+              <option value="70508000" title="Ovejas">Ovejas</option>
+              <option value="15511000" title="Pachavita">Pachavita</option>
+              <option value="25513000" title="Pacho">Pacho</option>
+              <option value="97511000" title="Pacoa">Pacoa</option>
+              <option value="17513000" title="Pacora">Pacora</option>
+              <option value="19513000" title="Padilla">Padilla</option>
+              <option value="15514000" title="Paez">Paez</option>
+              <option value="41518000" title="Paicol">Paicol</option>
+              <option value="20517000" title="Pailitas">Pailitas</option>
+              <option value="25518000" title="Paime">Paime</option>
+              <option value="15516000" title="Paipa">Paipa</option>
+              <option value="15518000" title="Pajarito">Pajarito</option>
+              <option value="41524000" title="Palermo">Palermo</option>
+              <option value="17524000" title="Palestina">Palestina</option>
+              <option value="68522000" title="Palmar">Palmar</option>
+              <option value="8520000" title="Palmar De Varela">Palmar De Varela</option>
+              <option value="76520000" title="Palmira">Palmira</option>
+              <option value="70523000" title="Palmito">Palmito</option>
+              <option value="54518000" title="Pamplona">Pamplona</option>
+              <option value="54520000" title="Pamplonita">Pamplonita</option>
+              <option value="94887000" title="Pana Pana">Pana Pana</option>
+              <option value="25524000" title="Pandi">Pandi</option>
+              <option value="15522000" title="Panqueba">Panqueba</option>
+              <option value="97777000" title="Papunaua">Papunaua</option>
+              <option value="68533000" title="Paramo">Paramo</option>
+              <option value="25530000" title="Paratebueno">Paratebueno</option>
+              <option value="25535000" title="Pasca">Pasca</option>
+              <option value="52001000" title="Pasto">Pasto</option>
+              <option value="15531000" title="Pauna">Pauna</option>
+              <option value="15533000" title="Paya">Paya</option>
+              <option value="15537000" title="Paz De Rio">Paz De Rio</option>
+              <option value="47541000" title="Pedraza">Pedraza</option>
+              <option value="20550000" title="Pelaya">Pelaya</option>
+              <option value="17541000" title="Pensilvania">Pensilvania</option>
+              <option value="5543000" title="Peque">Peque</option>
+              <option value="66001000" title="Pereira">Pereira</option>
+              <option value="15542000" title="Pesca">Pesca</option>
+              <option value="68547000" title="Piedecuesta">Piedecuesta</option>
+              <option value="73547000" title="Piedras">Piedras</option>
+              <option value="19548000" title="Piendamo">Piendamo</option>
+              <option value="63548000" title="Pijao">Pijao</option>
+              <option value="68549000" title="Pinchote">Pinchote</option>
+              <option value="13549000" title="Pinillos">Pinillos</option>
+              <option value="8549000" title="Piojo">Piojo</option>
+              <option value="15550000" title="Pisva">Pisva</option>
+              <option value="41548000" title="Pital">Pital</option>
+              <option value="41551000" title="Pitalito">Pitalito</option>
+              <option value="47551000" title="Pivijay">Pivijay</option>
+              <option value="73555000" title="Planadas">Planadas</option>
+              <option value="23555000" title="Planeta Rica">Planeta Rica</option>
+              <option value="47555000" title="Plato">Plato</option>
+              <option value="52540000" title="Policarpa">Policarpa</option>
+              <option value="8558000" title="Polonuevo">Polonuevo</option>
+              <option value="8560000" title="Ponedera">Ponedera</option>
+              <option value="19001000" title="Popayan">Popayan</option>
+              <option value="85263000" title="Pore">Pore</option>
+              <option value="52560000" title="Potosi">Potosi</option>
+              <option value="76563000" title="Pradera">Pradera</option>
+              <option value="73563000" title="Prado">Prado</option>
+              <option value="52565000" title="Providencia">Providencia</option>
+              <option value="23570000" title="Pueblo Nuevo">Pueblo Nuevo</option>
+              <option value="66572000" title="Pueblo Rico">Pueblo Rico</option>
+              <option value="5576000" title="Pueblorrico">Pueblorrico</option>
+              <option value="47570000" title="Puebloviejo">Puebloviejo</option>
+              <option value="68572000" title="Puente Nacional">Puente Nacional</option>
+              <option value="52573000" title="Puerres">Puerres</option>
+              <option value="86568000" title="Puerto Asis">Puerto Asis</option>
+              <option value="5579000" title="Puerto Berrio">Puerto Berrio</option>
+              <option value="15572000" title="Puerto Boyaca">Puerto Boyaca</option>
+              <option value="86569000" title="Puerto Caicedo">Puerto Caicedo</option>
+              <option value="8573000" title="Puerto Colombia">Puerto Colombia</option>
+              <option value="50450000" title="Puerto Concordia">Puerto Concordia</option>
+              <option value="23574000" title="Puerto Escondido">Puerto Escondido</option>
+              <option value="50568000" title="Puerto Gaitan">Puerto Gaitan</option>
+              <option value="86571000" title="Puerto Guzman">Puerto Guzman</option>
+              <option value="86573000" title="Puerto Leguizamo">Puerto Leguizamo</option>
+              <option value="23580000" title="Puerto Libertador">Puerto
+                Libertador</option>
+              <option value="50577000" title="Puerto Lleras">Puerto Lleras</option>
+              <option value="50573000" title="Puerto Lopez">Puerto Lopez</option>
+              <option value="68573000" title="Puerto Parra">Puerto Parra</option>
+              <option value="18592000" title="Puerto Rico">Puerto Rico</option>
+              <option value="81591000" title="Puerto Rondon">Puerto Rondon</option>
+              <option value="25572000" title="Puerto Salgar">Puerto Salgar</option>
+              <option value="54553000" title="Puerto Santander">Puerto Santander</option>
+              <option value="19573000" title="Puerto Tejada">Puerto Tejada</option>
+              <option value="5591000" title="Puerto Triunfo">Puerto Triunfo</option>
+              <option value="68575000" title="Puerto Wilches">Puerto Wilches</option>
+              <option value="25580000" title="Puli">Puli</option>
+              <option value="52585000" title="Pupiales">Pupiales</option>
+              <option value="73585000" title="Purificacion">Purificacion</option>
+              <option value="23586000" title="Purisima">Purisima</option>
+              <option value="25592000" title="Quebradanegra">Quebradanegra</option>
+              <option value="25594000" title="Quetame">Quetame</option>
+              <option value="27001000" title="Quibdo">Quibdo</option>
+              <option value="63594000" title="Quimbaya">Quimbaya</option>
+              <option value="66594000" title="Quinchia">Quinchia</option>
+              <option value="15580000" title="Quipama">Quipama</option>
+              <option value="25596000" title="Quipile">Quipile</option>
+              <option value="54599000" title="Ragonvalia">Ragonvalia</option>
+              <option value="15599000" title="Ramiriqui">Ramiriqui</option>
+              <option value="15600000" title="Raquira">Raquira</option>
+              <option value="85279000" title="Recetor">Recetor</option>
+              <option value="5604000" title="Remedios">Remedios</option>
+              <option value="47605000" title="Remolino">Remolino</option>
+              <option value="8606000" title="Repelon">Repelon</option>
+              <option value="50606000" title="Restrepo">Restrepo</option>
+              <option value="25612000" title="Ricaurte">Ricaurte</option>
+              <option value="73616000" title="Rioblanco">Rioblanco</option>
+              <option value="20614000" title="Rio De Oro">Rio De Oro</option>
+              <option value="76616000" title="Riofrio">Riofrio</option>
+              <option value="44001000" title="Riohacha">Riohacha</option>
+              <option value="5615000" title="Rionegro">Rionegro</option>
+              <option value="17614000" title="Riosucio">Riosucio</option>
+              <option value="13600000" title="Rio Viejo">Rio Viejo</option>
+              <option value="17616000" title="Risaralda">Risaralda</option>
+              <option value="41615000" title="Rivera">Rivera</option>
+              <option value="76622000" title="Roldanillo">Roldanillo</option>
+              <option value="73622000" title="Roncesvalles">Roncesvalles</option>
+              <option value="15621000" title="Rondon">Rondon</option>
+              <option value="19622000" title="Rosas">Rosas</option>
+              <option value="73624000" title="Rovira">Rovira</option>
+              <option value="68655000" title="Sabana De Torres">Sabana De Torres</option>
+              <option value="8634000" title="Sabanagrande">Sabanagrande</option>
+              <option value="5628000" title="Sabanalarga">Sabanalarga</option>
+              <option value="5631000" title="Sabaneta">Sabaneta</option>
+              <option value="15632000" title="Saboya">Saboya</option>
+              <option value="85315000" title="Sacama">Sacama</option>
+              <option value="15638000" title="Sachica">Sachica</option>
+              <option value="23660000" title="Sahagun">Sahagun</option>
+              <option value="41660000" title="Saladoblanco">Saladoblanco</option>
+              <option value="17653000" title="Salamina">Salamina</option>
+              <option value="54660000" title="Salazar">Salazar</option>
+              <option value="73671000" title="Saldana">Saldana</option>
+              <option value="63690000" title="Salento">Salento</option>
+              <option value="5642000" title="Salgar">Salgar</option>
+              <option value="15646000" title="Samaca">Samaca</option>
+              <option value="17662000" title="Samana">Samana</option>
+              <option value="52678000" title="Samaniego">Samaniego</option>
+              <option value="70670000" title="Sampues">Sampues</option>
+              <option value="41668000" title="San Agustin">San Agustin</option>
+              <option value="20710000" title="San Alberto">San Alberto</option>
+              <option value="5647000" title="San Andres">San Andres</option>
+              <option value="23670000" title="San Andres De Sotavento">San
+                Andres De Sotavento</option>
+              <option value="23672000" title="San Antero">San Antero</option>
+              <option value="73675000" title="San Antonio">San Antonio</option>
+              <option value="68673000" title="San Benito">San Benito</option>
+              <option value="70678000" title="San Benito Abad">San Benito Abad</option>
+              <option value="25649000" title="San Bernardo">San Bernardo</option>
+              <option value="54670000" title="San Calixto">San Calixto</option>
+              <option value="5649000" title="San Carlos">San Carlos</option>
+              <option value="25653000" title="San Cayetano">San Cayetano</option>
+              <option value="20750000" title="San Diego">San Diego</option>
+              <option value="52683000" title="Sandona">Sandona</option>
+              <option value="15660000" title="San Eduardo">San Eduardo</option>
+              <option value="13647000" title="San Estanislao">San Estanislao</option>
+              <option value="13650000" title="San Fernando">San Fernando</option>
+              <option value="5652000" title="San Francisco">San Francisco</option>
+              <option value="68679000" title="San Gil">San Gil</option>
+              <option value="13654000" title="San Jacinto">San Jacinto</option>
+              <option value="5656000" title="San Jeronimo">San Jeronimo</option>
+              <option value="68682000" title="San Joaquin">San Joaquin</option>
+              <option value="18610000" title="San Jose Del Fragua">San Jose Del
+                Fragua</option>
+              <option value="27660000" title="San Jose Del Palmar">San Jose Del
+                Palmar</option>
+              <option value="68684000" title="San Jose De Miranda">San Jose De
+                Miranda</option>
+              <option value="99760000" title="San Jose De Ocune">San Jose De
+                Ocune</option>
+              <option value="15664000" title="San Jose De Pare">San Jose De Pare</option>
+              <option value="50683000" title="San Juan De Arama">San Juan De
+                Arama</option>
+              <option value="70702000" title="San Juan De Betulia">San Juan De
+                Betulia</option>
+              <option value="44650000" title="San Juan Del Cesar">San Juan Del
+                Cesar</option>
+              <option value="5659000" title="San Juan De Uraba">San Juan De
+                Uraba</option>
+              <option value="50686000" title="San Juanito">San Juanito</option>
+              <option value="13657000" title="San Juan Nepomuceno">San Juan
+                Nepomuceno</option>
+              <option value="25662000" title="San Juan Rioseco">San Juan Rioseco</option>
+              <option value="52687000" title="San Lorenzo">San Lorenzo</option>
+              <option value="5660000" title="San Luis">San Luis</option>
+              <option value="15667000" title="San Luis De Gaceno">San Luis De
+                Gaceno</option>
+              <option value="70708000" title="San Marcos">San Marcos</option>
+              <option value="20770000" title="San Martin">San Martin</option>
+              <option value="13667000" title="San Martin De Loba">San Martin De
+                Loba</option>
+              <option value="15673000" title="San Mateo">San Mateo</option>
+              <option value="68686000" title="San Miguel">San Miguel</option>
+              <option value="15676000" title="San Miguel De Sema">San Miguel De
+                Sema</option>
+              <option value="70713000" title="San Onofre">San Onofre</option>
+              <option value="13670000" title="San Pablo">San Pablo</option>
+              <option value="15681000" title="San Pablo De Borbur">San Pablo De
+                Borbur</option>
+              <option value="5664000" title="San Pedro">San Pedro</option>
+              <option value="52694000" title="San Pedro De Cartago">San Pedro De
+                Cartago</option>
+              <option value="5665000" title="San Pedro De Uraba">San Pedro De
+                Uraba</option>
+              <option value="23686000" title="San Pelayo">San Pelayo</option>
+              <option value="5667000" title="San Rafael">San Rafael</option>
+              <option value="5670000" title="San Roque">San Roque</option>
+              <option value="19693000" title="San Sebastian">San Sebastian</option>
+              <option value="47707000" title="Santa Ana">Santa Ana</option>
+              <option value="13673000" title="Santa Catalina">Santa Catalina</option>
+              <option value="73686000" title="Santa Isabel">Santa Isabel</option>
+              <option value="8675000" title="Santa Lucia">Santa Lucia</option>
+              <option value="15690000" title="Santa Maria">Santa Maria</option>
+              <option value="47001000" title="Santa Marta">Santa Marta</option>
+              <option value="15686000" title="Santana">Santana</option>
+              <option value="99575000" title="Santa Rita">Santa Rita</option>
+              <option value="13683000" title="Santa Rosa">Santa Rosa</option>
+              <option value="66682000" title="Santa Rosa De Cabal">Santa Rosa De
+                Cabal</option>
+              <option value="13688000" title="Santa Rosa Del Sur">Santa Rosa Del
+                Sur</option>
+              <option value="99624000" title="Santa Rosalia">Santa Rosalia</option>
+              <option value="15696000" title="Santa Sofia">Santa Sofia</option>
+              <option value="54680000" title="Santiago">Santiago</option>
+              <option value="5690000" title="Santo Domingo">Santo Domingo</option>
+              <option value="8685000" title="Santo Tomas">Santo Tomas</option>
+              <option value="5697000" title="Santuario">Santuario</option>
+              <option value="5674000" title="San Vicente">San Vicente</option>
+              <option value="47703000" title="San Zenon">San Zenon</option>
+              <option value="52720000" title="Sapuye">Sapuye</option>
+              <option value="81736000" title="Saravena">Saravena</option>
+              <option value="54720000" title="Sardinata">Sardinata</option>
+              <option value="25718000" title="Sasaima">Sasaima</option>
+              <option value="15720000" title="Sativanorte">Sativanorte</option>
+              <option value="15723000" title="Sativasur">Sativasur</option>
+              <option value="5736000" title="Segovia">Segovia</option>
+              <option value="25736000" title="Sesquile">Sesquile</option>
+              <option value="76736000" title="Sevilla">Sevilla</option>
+              <option value="5679000" title="Sfe. Antioquia">Sfe. Antioquia</option>
+              <option value="5686000" title="Sfe. Antioquia">Sfe. Antioquia</option>
+              <option value="15740000" title="Siachoque">Siachoque</option>
+              <option value="25740000" title="Sibate">Sibate</option>
+              <option value="54743000" title="Silos">Silos</option>
+              <option value="25743000" title="Silvania">Silvania</option>
+              <option value="19743000" title="Silvia">Silvia</option>
+              <option value="68745000" title="Simacota">Simacota</option>
+              <option value="25745000" title="Simijaca">Simijaca</option>
+              <option value="13744000" title="Simiti">Simiti</option>
+              <option value="70742000" title="Since">Since</option>
+              <option value="70001000" title="Sincelejo">Sincelejo</option>
+              <option value="27745000" title="Sipi">Sipi</option>
+              <option value="47745000" title="Sitionuevo">Sitionuevo</option>
+              <option value="25754000" title="Soacha">Soacha</option>
+              <option value="15753000" title="Soata">Soata</option>
+              <option value="15757000" title="Socha">Socha</option>
+              <option value="68755000" title="Socorro">Socorro</option>
+              <option value="15755000" title="Socota">Socota</option>
+              <option value="15759000" title="Sogamoso">Sogamoso</option>
+              <option value="18765000" title="Solano">Solano</option>
+              <option value="8758000" title="Soledad">Soledad</option>
+              <option value="15761000" title="Somondoco">Somondoco</option>
+              <option value="5756000" title="Sonson">Sonson</option>
+              <option value="5761000" title="Sopetran">Sopetran</option>
+              <option value="13760000" title="Soplaviento">Soplaviento</option>
+              <option value="25758000" title="Sopo">Sopo</option>
+              <option value="15762000" title="Sora">Sora</option>
+              <option value="15764000" title="Soraca">Soraca</option>
+              <option value="15763000" title="Sotaquira">Sotaquira</option>
+              <option value="68770000" title="Suaita">Suaita</option>
+              <option value="8770000" title="Suan">Suan</option>
+              <option value="19780000" title="Suarez">Suarez</option>
+              <option value="41770000" title="Suaza">Suaza</option>
+              <option value="25769000" title="Subachoque">Subachoque</option>
+              <option value="68773000" title="Sucre">Sucre</option>
+              <option value="25772000" title="Suesca">Suesca</option>
+              <option value="25777000" title="Supata">Supata</option>
+              <option value="17777000" title="Supia">Supia</option>
+              <option value="68780000" title="Surata">Surata</option>
+              <option value="25779000" title="Susa">Susa</option>
+              <option value="15774000" title="Susacon">Susacon</option>
+              <option value="15776000" title="Sutamarchan">Sutamarchan</option>
+              <option value="25781000" title="Sutatausa">Sutatausa</option>
+              <option value="15778000" title="Sutatenza">Sutatenza</option>
+              <option value="25785000" title="Tabio">Tabio</option>
+              <option value="27787000" title="Tado">Tado</option>
+              <option value="13780000" title="Talaigua Nuevo">Talaigua Nuevo</option>
+              <option value="20787000" title="Tamalameque">Tamalameque</option>
+              <option value="85400000" title="Tamara">Tamara</option>
+              <option value="81794000" title="Tame">Tame</option>
+              <option value="5789000" title="Tamesis">Tamesis</option>
+              <option value="52786000" title="Taminango">Taminango</option>
+              <option value="52788000" title="Tangua">Tangua</option>
+              <option value="97666000" title="Taraira">Taraira</option>
+              <option value="91798000" title="Tarapaca">Tarapaca</option>
+              <option value="5790000" title="Taraza">Taraza</option>
+              <option value="41791000" title="Tarqui">Tarqui</option>
+              <option value="5792000" title="Tarso">Tarso</option>
+              <option value="15790000" title="Tasco">Tasco</option>
+              <option value="85410000" title="Tauramena">Tauramena</option>
+              <option value="25793000" title="Tausa">Tausa</option>
+              <option value="41799000" title="Tello">Tello</option>
+              <option value="25797000" title="Tena">Tena</option>
+              <option value="47798000" title="Tenerife">Tenerife</option>
+              <option value="25799000" title="Tenjo">Tenjo</option>
+              <option value="15798000" title="Tenza">Tenza</option>
+              <option value="54800000" title="Teorama">Teorama</option>
+              <option value="41801000" title="Teruel">Teruel</option>
+              <option value="41797000" title="Tesalia">Tesalia</option>
+              <option value="25805000" title="Tibacuy">Tibacuy</option>
+              <option value="15804000" title="Tibana">Tibana</option>
+              <option value="15806000" title="Tibasosa">Tibasosa</option>
+              <option value="25807000" title="Tibirita">Tibirita</option>
+              <option value="54810000" title="Tibu">Tibu</option>
+              <option value="23807000" title="Tierralta">Tierralta</option>
+              <option value="41807000" title="Timana">Timana</option>
+              <option value="19807000" title="Timbio">Timbio</option>
+              <option value="19809000" title="Timbiqui">Timbiqui</option>
+              <option value="15808000" title="Tinjaca">Tinjaca</option>
+              <option value="15810000" title="Tipacoque">Tipacoque</option>
+              <option value="5809000" title="Titiribi">Titiribi</option>
+              <option value="15814000" title="Toca">Toca</option>
+              <option value="25815000" title="Tocaima">Tocaima</option>
+              <option value="25817000" title="Tocancipa">Tocancipa</option>
+              <option value="15816000" title="Togui">Togui</option>
+              <option value="5819000" title="Toledo">Toledo</option>
+              <option value="70820000" title="Tolu">Tolu</option>
+              <option value="70823000" title="Toluviejo">Toluviejo</option>
+              <option value="68820000" title="Tona">Tona</option>
+              <option value="15820000" title="Topaga">Topaga</option>
+              <option value="25823000" title="Topaipi">Topaipi</option>
+              <option value="19821000" title="Toribio">Toribio</option>
+              <option value="76823000" title="Toro">Toro</option>
+              <option value="15822000" title="Tota">Tota</option>
+              <option value="19824000" title="Totoro">Totoro</option>
+              <option value="85430000" title="Trinidad">Trinidad</option>
+              <option value="76828000" title="Trujillo">Trujillo</option>
+              <option value="8832000" title="Tubara">Tubara</option>
+              <option value="76834000" title="Tulua">Tulua</option>
+              <option value="52835000" title="Tumaco">Tumaco</option>
+              <option value="15001000" title="Tunja">Tunja</option>
+              <option value="15832000" title="Tunungua">Tunungua</option>
+              <option value="52838000" title="Tuquerres">Tuquerres</option>
+              <option value="13836000" title="Turbaco">Turbaco</option>
+              <option value="13838000" title="Turbana">Turbana</option>
+              <option value="5837000" title="Turbo">Turbo</option>
+              <option value="15835000" title="Turmeque">Turmeque</option>
+              <option value="15837000" title="Tuta">Tuta</option>
+              <option value="15839000" title="Tutaza">Tutaza</option>
+              <option value="25839000" title="Ubala">Ubala</option>
+              <option value="25841000" title="Ubaque">Ubaque</option>
+              <option value="25843000" title="Ubate">Ubate</option>
+              <option value="76845000" title="Ulloa">Ulloa</option>
+              <option value="15842000" title="Umbita">Umbita</option>
+              <option value="25845000" title="Une">Une</option>
+              <option value="27800000" title="Unguia">Unguia</option>
+              <option value="5842000" title="Uramita">Uramita</option>
+              <option value="44847000" title="Uribia">Uribia</option>
+              <option value="5847000" title="Urrao">Urrao</option>
+              <option value="44855000" title="Urumita">Urumita</option>
+              <option value="8849000" title="Usiacuri">Usiacuri</option>
+              <option value="25851000" title="Utica">Utica</option>
+              <option value="5854000" title="Valdivia">Valdivia</option>
+              <option value="23855000" title="Valencia">Valencia</option>
+              <option value="68855000" title="Valle De San Jose">Valle De San
+                Jose</option>
+              <option value="73854000" title="Valle De San Juan">Valle De San
+                Juan</option>
+              <option value="20001000" title="Valledupar">Valledupar</option>
+              <option value="5856000" title="Valparaiso">Valparaiso</option>
+              <option value="5858000" title="Vegachi">Vegachi</option>
+              <option value="68861000" title="Velez">Velez</option>
+              <option value="73861000" title="Venadillo">Venadillo</option>
+              <option value="5861000" title="Venecia">Venecia</option>
+              <option value="15861000" title="Ventaquemada">Ventaquemada</option>
+              <option value="25862000" title="Vergara">Vergara</option>
+              <option value="76863000" title="Versalles">Versalles</option>
+              <option value="68867000" title="Vetas">Vetas</option>
+              <option value="25867000" title="Viani">Viani</option>
+              <option value="17867000" title="Victoria">Victoria</option>
+              <option value="5873000" title="Vigia Del Fuerte">Vigia Del Fuerte</option>
+              <option value="76869000" title="Vijes">Vijes</option>
+              <option value="54871000" title="Villa Caro">Villa Caro</option>
+              <option value="15407000" title="Villa De Leyva">Villa De Leyva</option>
+              <option value="54874000" title="Villa Del Rosario">Villa Del
+                Rosario</option>
+              <option value="86885000" title="Villa Garzon">Villa Garzon</option>
+              <option value="25871000" title="Villagomez">Villagomez</option>
+              <option value="73870000" title="Villahermosa">Villahermosa</option>
+              <option value="17873000" title="Villamaria">Villamaria</option>
+              <option value="13873000" title="Villa Nueva">Villa Nueva</option>
+              <option value="25873000" title="Villapinzon">Villapinzon</option>
+              <option value="73873000" title="Villarrica">Villarrica</option>
+              <option value="50001000" title="Villavicencio">Villavicencio</option>
+              <option value="41872000" title="Villavieja">Villavieja</option>
+              <option value="25875000" title="Villeta">Villeta</option>
+              <option value="25878000" title="Viota">Viota</option>
+              <option value="15879000" title="Viracacha">Viracacha</option>
+              <option value="50711000" title="Vista Hermosa">Vista Hermosa</option>
+              <option value="17877000" title="Viterbo">Viterbo</option>
+              <option value="25885000" title="Yacopi">Yacopi</option>
+              <option value="52885000" title="Yacuanquer">Yacuanquer</option>
+              <option value="41885000" title="Yaguara">Yaguara</option>
+              <option value="5885000" title="Yali">Yali</option>
+              <option value="5887000" title="Yarumal">Yarumal</option>
+              <option value="97889000" title="Yavarate">Yavarate</option>
+              <option value="5890000" title="Yolombo">Yolombo</option>
+              <option value="85001000" title="Yopal">Yopal</option>
+              <option value="76890000" title="Yotoco">Yotoco</option>
+              <option value="76892000" title="Yumbo">Yumbo</option>
+              <option value="13894000" title="Zambrano">Zambrano</option>
+              <option value="68895000" title="Zapatoca">Zapatoca</option>
+              <option value="5895000" title="Zaragoza">Zaragoza</option>
+              <option value="76895000" title="Zarzal">Zarzal</option>
+              <option value="15897000" title="Zetaquira">Zetaquira</option>
+              <option value="25898000" title="Zipacon">Zipacon</option>
+              <option value="25899000" title="Zipaquira">Zipaquira</option>
+            </select>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    </form>
+  </body>
+</html>

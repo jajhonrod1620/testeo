@@ -1,0 +1,73 @@
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Select2 : multi-select : get selected values/text : data array - jsFiddle demo by platypusman</title>  
+  <script type="text/javascript" src="ajax/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="ajax/select2.js"></script>
+  <link rel="stylesheet" type="text/css" href="ajax/select2.css">
+  <style type="text/css">
+    p { margin: 1em 0; }
+  </style>
+  <script type="text/javascript">//<![CDATA[ 
+    $(function(){
+    var test = $('#test');
+    $(test).select2({
+        data:[
+            {id:0,text:"enhancement"},
+            {id:1,text:"bug"},
+            {id:2,text:"duplicate"},
+            {id:3,text:"invalid"},
+            {id:4,text:"wontfix"}
+        ],
+        multiple: true,
+        width: "300px"
+    });
+
+    $(test).change(function() {
+        //var ids = $(test).val(); // works
+        //var selections = $(test).filter('option:selected').text(); // doesn't work
+        //var ids = $(test).select2('data').id; // doesn't work (returns 'undefined')
+        //var selections = $(test).select2('data').text; // doesn't work (returns 'undefined')
+        //var selections = $(test).select2('data');
+        var selections = ( JSON.stringify($(test).select2('data')) );
+        //console.log('Selected IDs: ' + ids);
+        console.log('Selected options: ' + selections);
+        //$('#selectedIDs').text(ids);
+        $('#selectedText').text(selections);
+    });
+
+    });//]]>
+  </script>
+</head>
+<body>
+<!--  
+  <div class="select2-container select2-container-multi" id="s2id_test" style="width: 300px;">
+    <ul class="select2-choices">
+      <li class="select2-search-field">
+        <label for="s2id_autogen1" class="select2-offscreen"></label><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen1" placeholder="" aria-activedescendant="select2-result-label-7" style="width: 10px;">
+      </li>
+    </ul>
+  </div>
+-->
+  <input type="hidden" id="test" tabindex="-1" class="select2-offscreen">
+<!--
+  <p>Selected IDs: <span id="selectedIDs"></span></p> 
+-->
+  <p>Selected Options: <span id="selectedText"></span></p>
+
+<!--  
+  <span role="status" aria-live="polite" class="select2-hidden-accessible">5 results are available, use up and down arrow keys to navigate.</span>
+-->
+<!--
+  <div class="select2-sizer" style="position: absolute; left: -10000px; top: -10000px; display: none; font-size: 16px; font-family: sans-serif; font-style: normal; font-weight: normal; letter-spacing: normal; text-transform: none; white-space: nowrap;">
+  </div>
+-->
+<!--
+  <div id="select2-drop-mask" class="select2-drop-mask" style="display: none;"></div>
+-->
+<!--
+  <div class="select2-drop select2-drop-multi select2-display-none select2-drop-active" style="left: 0px; width: 300px; top: 32px; bottom: auto; display: none;">
+    <ul class="select2-results"></ul>
+  </div>
+-->
+</body>
+</html>

@@ -1,12 +1,18 @@
 <?php
-	echo "date('Y-m-d H:i:s')   =  ".date('Y-m-d H:i:s');
-	
+	echo "date('Y-m-d H:i:s')   =  ".date('Y-m-d H:i:s'). "<br>";
+
+	$date = new DateTime();
+	echo $date->getTimestamp();
+	$date = date_create();
+	echo '<br> Timestamp ----------------- date = date_create() : ';
+	echo '<br> date_format($date, "U = Y-m-d H:i:s")';
+	echo date_format($date, 'U = Y-m-d H:i:s') . "<br>";
 	
 	$fechacambiaformato=date('m/d/Y');
 	echo "<br> <br> date('m/d/Y') = $fechacambiaformato";
 	
 	$fechanumero = strtotime($fechacambiaformato, 0);
-	echo "<br> <br> strtotime(\$fechacambiaformato, 0)   =  $fechanumero";
+	echo " linea 9 <br> <br> strtotime(\$fechacambiaformato, 0)   =  $fechanumero";
 
 	
 	$plazocobroseg=1*86400;//a futuro el un tiene que ser variable de 0 a algo;
@@ -151,9 +157,28 @@
 	echo "<br> <br>	\$fecha  = strtotime(date('Y-m-d')) - strtotime('2103-07-16')  = " .$fecha."<br>";
 	
 	
-	echo "<br>";
+	echo "<br> 154";
 	
 	$fecha  = intval(strtotime(date('Y-m-d')) - strtotime(date('2013-07-16')))/86400;
 	echo "<br> <br>	\$fecha  = (strtotime(date('Y-m-d')) - strtotime(\$dias->fields['2103-07-16']))/86400  = " .$fecha."<br>";
+  
+	echo "<br>";
+	echo "<br> <br>	date(\"Y-m-d\", strtotime(\"+1 day\", strtotime(date('Y-m-d'))))  = " .
+		date("Y-m-d", strtotime("+1 day", strtotime(date('Y-m-d'))));
+
+	echo "<br>";
+	echo "<br> <br>	date(\"Y-m-d\", strtotime(\"-1 day\", strtotime(date('2014-11-19'))))  = " .
+		date("Y-m-d", strtotime("-1 day", strtotime(date('Y-m-d','2014-11-19'))));
+    
+	echo "<br> <br>	intval((strtotime(date('Y-m-d')) - strtotime('1970-01-01'))  = " .
+		intval((strtotime(date('Y-m-d')) - strtotime('1970-01-01')));
+	echo "<br> <br>	intval((strtotime(date('Y-m-d')) - strtotime(''))  = " .
+		intval((strtotime(date('Y-m-d')) - strtotime('')));
+	echo "<br> <br>	intval((strtotime(date('Y-m-d')) - strtotime('2015-06-01'))  = " .
+		intval((strtotime(date('Y-m-d')) - strtotime('2015-06-01')));
 	
+	echo "<br> <br> obtener hora en cadena : 2016-01-28 10:34:06.0 : <br>";
+	echo "\$date = new DateTime('2016-01-28 10:34:06.0'); <br>";
+	$date = new DateTime('2016-01-28 10:34:06.0');
+	echo "\$date->format('H:i:s') =  " . $date->format('H:i:s');
 ?>

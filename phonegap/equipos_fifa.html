@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo">Obtenga su equipo</p>
+
+<script>
+var equipos = ["Juventus", 
+					"Man U", 
+					"Man City", 
+					"Chelsea", 
+					"Real M",
+					"Barca",
+					,"Bayern"
+					,"Borussia"
+					,"PSG"
+					];
+
+function myFunction() {
+    
+var show = equipos[Math.floor(Math.random() * equipos.length)];
+var x = document.getElementById("equipo");
+    x.innerHTML = show;
+    var indice = equipos.indexOf(show);
+    equipos.splice(indice, 1);
+}
+</script>
+
+<button onclick="myFunction()">Click Me!</button>
+<p id='equipo'></p>
+
+</body>
+</html>

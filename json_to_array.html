@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo"></p>
+<script>
+//creamos el objeto javascript (no es JSON)
+var person = [];
+var personJson;
+person.push ({firstName:"John", lastName:"Doe", age:[46,25]});
+person.push ({firstName:"jerry", lastName:"cher", age:[64,18]});
+debugger;
+var arr = Object.keys(person).map(function(k) { return person[k] });
+debugger;
+
+
+// lo forzamo a cadena JSON
+personJson = JSON.stringify(arr);
+alert(person[0]["firstName"].indexOf(46));
+document.getElementById("demo").innerHTML = person[0]["firstName"];
+</script>
+</body>
+</html>

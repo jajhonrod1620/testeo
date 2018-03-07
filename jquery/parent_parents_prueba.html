@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>closest demo</title>
+  <style>
+  li {
+    margin: 3px;
+    padding: 3px;
+    background: #EEEEEE;
+  }
+  li.hilight {
+    background: yellow;
+  }
+  </style>
+  <script src="jquery-1.7.min.js"></script>
+</head>
+<body>
+  <div id = "divpadre">
+  <ul class="level-1">
+    <li class="item-i">I</li>
+    <li class="item-ii">II
+      <ul class="level-2">
+        <li class="item-a">A</li>
+        <li class="item-b">B
+          <ul class="level-3">
+            <li class="item-1">1</li>
+            <li class="item-2">2</li>
+            <li class="item-3">3</li>
+          </ul>
+        </li>
+        <li class="item-c">C</li>
+      </ul>
+    </li>
+    <li class="item-iii">III</li>
+  </ul>
+  </div>
+  <script>
+    $( "li.item-a" ).parent().css( "background-color", "red" );
+    var parentdivid = $( "li.item-a" ).parent('div').attr('id');
+    var parentsdivid = $( "li.item-a" ).parents('div').attr('id');
+    $( "ul.level-2" ).append( "<li>parent div id = "+parentdivid+"</li>" );
+    $( "ul.level-2" ).append( "<li>parents div id = "+parentsdivid+"</li>" );
+  </script>
+</body>
+</html>

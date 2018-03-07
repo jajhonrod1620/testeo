@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+//los valores en comillas para obtener el indexof
+
+//var person = [{firstName:"John", edad:"46", lastName:"Doe"},
+//	{firstName:"jerry", edad:"64", lastName:"cher"}];
+
+var person = [];
+var arr = [];
+var arr2 = [];
+var cars = ["Saab", "Volvo", "BMW"];
+debugger;
+person.push ({firstName:"John", age:"46", lastName:"Doe"});
+person.push ({firstName:"jerry", age:"64",lastName:"cher"});
+for(i =0; i< person.length; i++) {
+	arr[i] = person[i].age;
+	arr2[person[i].firstName] = [];
+}
+for(i =0; i< person.length; i++) {
+	for(j =0; j< cars.length; j++) {
+		arr2[person[i].firstName][j] = cars[j];
+	}
+}
+debugger;
+//alert(person[1].age);
+//alert(person[1].firstName.indexOf(64));
+alert(arr2['jerry'][1]);
+document.getElementById("demo").innerHTML = person[0]["age"];
+</script>
+</body>
+</html>

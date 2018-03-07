@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var ini,fin,rango;
+var arrSelec = [];
+var arrTodo = [];
+function validateForm() {
+	debugger;
+	var i,j=0;
+    ini = parseInt(document.forms["formrifa"]["txt_inicio"].value);
+    fin = parseInt(document.forms["formrifa"]["txt_fin"].value);
+    rango = fin-ini;
+    for(i=0;i<=rango;i++){
+		arrTodo[i] = ini+i;
+	}
+}
+function generarNumero() {
+	debugger;
+	var existe = false;
+	var i,j,longi,longselec,elegido,numero=0,k=0;
+    //var strSelecccionados = document.getElementById('arr_seleccionados');
+    var numero = parseInt(document.getElementById('txt_numero').value);
+    var arrYa = [];
+    var arrFalta = [];
+    longi = arrSelec.length;
+	if(longi == 0 && !isNaN(numero)){
+		arrSelec[0] = numero;
+	} else if (longi > 0){
+		for(j=0;j<longi;j++){
+			existe == false;
+			if(numero == arrSelec[j]){
+				existe = true;				
+			}
+		}
+		if(existe == false){
+			arrSelec[longi] = numero;
+		}
+	}
+	existe = false;
+	/*
+	Armamos el array de faltantes
+	*/
+	longi = arrSelec.length;
+	debugger;
+	if(longi == 0){
+		arrFalta = arrTodo;
+	} else {
+		for(i=0;i<=rango;i++){
+			existe = false;
+			for(j=0;j<longi;j++){
+				if(arrTodo[i] == arrSelec[j]){
+					existe = true;
+				}
+			}
+			if(existe == false){
+				arrFalta[k] = arrTodo[i];
+				k++;
+			}
+		}
+	}
+	debugger;
+	longselec = arrFalta.length;
+	if(longselec > 0){
+		elegido = Math.floor((Math.random() * longselec));
+		document.getElementById("arr_seleccionados").value = arrFalta.join();
+		alert(arrFalta[elegido]);
+		
+	} else {
+		alert("No hay valores");
+	}
+	document.getElementById('txt_numero').value = "";
+}
+</script>
+</head>
+<body>
+
+<form name="formrifa" action="" method="post">
+Inicio: <input type="text" name="txt_inicio" id="txt_inicio">
+Fin: <input type="text" name="txt_fin" id="txt_fin">
+Numero: <input type="text" name="txt_numero" id="txt_numero">
+<input type="text" name="arr_seleccionados" id="arr_seleccionados" value="">
+<input type="button" onclick="validateForm()" value="Reg">
+<input type="button" onclick="generarNumero()" value="Gen">
+</form>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>closest demo</title>
+  <style>
+  li {
+    margin: 3px;
+    padding: 3px;
+    background: #EEEEEE;
+  }
+  li.hilight {
+    background: yellow;
+  }
+  </style>
+  <script src="jquery-1.7.min.js"></script>
+</head>
+<body>
+<table>
+  <tr id = 'fila-id'>
+    <td>
+    <ul id = "list-a">
+      <li><b class="item-a">Click me!</b>
+      <input type="checkbox" id="jqg_Grid_nobligacionesn_13" role="checkbox" checked="checked">
+      </li>
+      <li>You can also <b>Click me!</b></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+ 
+<script>
+  var listElements = $( "li" ).css( "color", "blue" );
+  $( document ).on( "click", function( event ) {
+    $( event.target ).closest( listElements ).toggleClass( "hilight" );
+  });
+
+  $( "b.item-a" ).closest( "li" ).css( "background-color", "red" );
+  var closeid = $( "b.item-a" ).closest( "ul" ).attr( "id" );
+  var parentid = $( "b.item-a" ).parents( "ul" ).attr( "id" );
+  $( "ul" ).append( "<li>closest ul id = "+closeid+"</li>" );
+  var filaid = $( "#jqg_Grid_nobligacionesn_13" ).parents( "tr" ).attr( "id" );
+  $( "ul" ).append( "<li>parent tr id = "+filaid+"</li>" );
+  
+</script>
+ 
+</body>
+</html>

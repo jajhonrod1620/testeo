@@ -1,0 +1,23 @@
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.hoverIntent.js" type="text/javascript"></script> <!-- optional -->
+<script src="jquery.cluetip.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('a.tips').cluetip();
+
+  $('#houdini').cluetip({
+    splitTitle: '|', // use the invoking element's title attribute to populate the clueTip...
+                     // ...and split the contents into separate divs where there is a "|"
+    showTitle: false // hide the clueTip's heading
+  });
+});
+</script>
+<link rel="stylesheet" href="jquery.cluetip.css" type="text/css" />
+
+
+ <!-- use ajax/ahah to pull content from fragment.html: -->
+  <p><a class="tips" href="fragment.html" rel="fragment.html">show me the cluetip!</a></p>
+
+  <!-- use title attribute for clueTip contents, but don't include anything in the clueTip's heading -->
+  <p><a id="houdini" href="houdini.html" title="|Houdini was an escape artist.|He was also adept at prestidigitation.">Houdini</a></p>

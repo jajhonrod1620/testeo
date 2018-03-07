@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!-- DECLARAMOS LOS  XMLNS Y LOS URN -->
+<definitions targetNamespace="urn:BasicAPI" xmlns:tns="urn:BasicAPI"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+   <types>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:BasicAPI">
+                  
+<!-- DECLARAMOS LOS  LOS PAR?METROS DE NUESTRA FUNCI?N -->
+		<xsd:complexType name="sumaParams">
+			<xsd:all>
+<!-- INDICAMOS EL NOMBRE DEL ELEMENTO Y SU TIPO DE DATO -->
+				<xsd:element name="a" type="xsd:int" />
+				<xsd:element name="b" type="xsd:int" />
+			</xsd:all>
+		 </xsd:complexType>                  
+			
+<!-- CREAMOS LOS ELEMENTOS RESPUESTA Y PETICION -->
+	    <xsd:element name="sumaRequest"  type="tns:sumaParams"/>	         
+		<xsd:element name="sumaResponse" type="xsd:int"/>
+		<!-- INDICAMOS QUE LA RESPUESTA ES UN ENTERO -->				  
+	
+	</xsd:schema>
+   </types>  
+   
+<!-- DECLARAMOS LOS MENSAJES QUE FORMARAN LA OPERACION --> 
+<!-- , Es necesario seguir el patron Request Response por asuntos de orden -->
+<!--   Ya que un WSDL puede llegar a tener decenas de operaciones -->
+   <message name="suma">
+      <part name="suma" element="tns:sumaRequest"/>
+   </message>
+   <message name="sumaResponse">
+      <part name="result" element="tns:sumaResponse"/>
+   </message>  
+
+   
+  <!-- CREAMOS EL PUETO DE SERVICIO DE LA OPERACION -->
+  <!-- INDICAMOS CUAL ES LA ENTRADA Y LA SALIDA -->
+   <portType name="ServicePortType">
+   	   <operation name="suma">
+         <input message="tns:suma"/>
+         <output message="tns:sumaResponse"/>
+       </operation>       
+   </portType>     
+
+   
+  <!-- CREAMOS EL BINDING DE LA OPERACION -->
+
+   <binding name="ServiceBinding1" type="tns:ServicePortType">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+         <operation name="suma">
+         <soap:operation soapAction="suma"/>
+         <input>
+            <soap:body use="literal"/>
+         </input>
+          <output>
+            <soap:body use="literal"/>
+         </output>
+         <fault name="AccessFault">
+            <soap:fault name="AccessFault" use="literal"/>
+         </fault>
+       </operation> 
+   </binding>
+
+ 
+  <!-- POR ULTIMO DECLARAMOS EL SERVICIO -->
+   <service name="Service">
+      <port name="Port1" binding="tns:ServiceBinding1">
+        <!-- INDICAMOS DONDE SE UBICA NUESTRO SCRIPT EN PHP -->
+         <soap:address location="http://localhost/soapserver/serverbasic.php"/>
+      </port>
+                
+   </service>
+</definitions>    

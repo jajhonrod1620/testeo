@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<p id="demo"></p>
+
+<script>
+//los valores en comillas para obtener el indexof
+var nombre, edades;
+var person = [];
+person.push({firstName:"jeff", edad:[46,25]});
+person.push({firstName:"george", edad:[72,25]});
+person.push({firstName:"al", edad:[48,39]});
+//{firstName:"5678", edad:["64","38"]};
+debugger;
+if(jQuery.isEmptyObject(person)){
+	nombre = 5678;
+	edades = [64, 38];
+	alert(person[0].edad[0]);
+} else {
+	nombre = "pete";
+	edades = [12, 15];
+	person.push ({firstName: nombre, edad : edades});
+	alert(person[1].edad[1]);
+}
+person.splice(2,1);
+alert(person[2].edad[1]);
+</script>
+</body>
+</html>

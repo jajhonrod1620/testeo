@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<p id="demo"></p>
+
+<script>
+//los valores en comillas para obtener el indexof
+var nombre, edades, arr,personJson, person,arr2;
+debugger;
+arr = "[{\"firstName\":\"2345\", \"edad\":[\"46\",\"25\"]}]";
+//{firstName:"5678", edad:["64","38"]};
+person = JSON.parse(arr);
+//person = Object.keys(personJson).map(function(k) { return personJson[k] });
+
+debugger;
+if(jQuery.isEmptyObject(person)){
+	nombre = 5678;
+	edades = [64, 38];
+	alert(person[0].edad[0]);
+} else {
+	nombre = "1111";
+	edades = ["12", "15"];
+	longi = person.length;
+	/*for(i=0; i < longi; i++){
+		if(i == longi -1 ){
+			person[i]["firstName"]= nombre;
+			person[i]["edad"]=edades;
+		}
+	}*/
+	person.push({"firstName" : nombre, "edad" : edades});
+	alert(person[1].edad[1]);
+}
+
+</script>
+</body>
+</html>
